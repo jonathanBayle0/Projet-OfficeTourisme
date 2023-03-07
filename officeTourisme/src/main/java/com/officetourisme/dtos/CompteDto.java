@@ -1,4 +1,4 @@
-package com.officetourisme.dto;
+package com.officetourisme.dtos;
 
 import com.officetourisme.entities.Commentaire;
 import com.officetourisme.entities.Historique;
