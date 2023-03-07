@@ -5,6 +5,7 @@
 package com.officetourisme.entities;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Set;
 import jakarta.persistence.*;
@@ -40,11 +41,11 @@ public class Sortie implements Serializable {
     @Basic(optional = false)
     @Column(name = "sor_dateDebut")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date dateDebut;
+    private Timestamp dateDebut;
     @Basic(optional = false)
     @Column(name = "sor_dateFin")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date dateFin;
+    private Timestamp dateFin;
     @Basic(optional = false)
     @Column(name = "sor_prix")
     private float prix;
@@ -68,7 +69,7 @@ public class Sortie implements Serializable {
         this.id = id;
     }
 
-    public Sortie(Integer id, String nom, Date dateDebut, Date dateFin, float prix, String adresse, int capacite) {
+    public Sortie(Integer id, String nom, Timestamp dateDebut, Timestamp dateFin, float prix, String adresse, int capacite) {
         this.id = id;
         this.nom = nom;
         this.dateDebut = dateDebut;
@@ -106,7 +107,7 @@ public class Sortie implements Serializable {
         return dateDebut;
     }
 
-    public void setDateDebut(Date sordateDebut) {
+    public void setDateDebut(Timestamp sordateDebut) {
         this.dateDebut = sordateDebut;
     }
 
@@ -114,7 +115,7 @@ public class Sortie implements Serializable {
         return dateFin;
     }
 
-    public void setDateFin(Date sordateFin) {
+    public void setDateFin(Timestamp sordateFin) {
         this.dateFin = sordateFin;
     }
 

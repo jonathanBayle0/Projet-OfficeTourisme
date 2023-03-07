@@ -7,6 +7,7 @@ package com.officetourisme.entities;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Date;
 
 /**
@@ -19,8 +20,7 @@ import java.util.Date;
     @NamedQuery(name = "Commentaire.findAll", query = "SELECT c FROM Commentaire c"),
     @NamedQuery(name = "Commentaire.findByComId", query = "SELECT c FROM Commentaire c WHERE c.id = :comId"),
     @NamedQuery(name = "Commentaire.findByComType", query = "SELECT c FROM Commentaire c WHERE c.type = :comType"),
-    @NamedQuery(name = "Commentaire.findByComDate", query = "SELECT c FROM Commentaire c WHERE c.date = :comDate"),
-    @NamedQuery(name = "Commentaire.findByComContenu", query = "SELECT c FROM Commentaire c WHERE c.contenu = :comContenu")})
+    @NamedQuery(name = "Commentaire.findByComDate", query = "SELECT c FROM Commentaire c WHERE c.date = :comDate")})
 public class Commentaire implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -34,7 +34,7 @@ public class Commentaire implements Serializable {
     @Basic(optional = false)
     @Column(name = "com_date")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date date;
+    private Timestamp date;
     @Column(name = "com_contenu")
     private String contenu;
     @JoinColumn(name = "cpt_id", referencedColumnName = "cpt_id")
@@ -51,7 +51,7 @@ public class Commentaire implements Serializable {
         this.id = id;
     }
 
-    public Commentaire(Integer id, int type, Date date) {
+    public Commentaire(Integer id, int type, Timestamp date) {
         this.id = id;
         this.type = type;
         this.date = date;
@@ -77,7 +77,7 @@ public class Commentaire implements Serializable {
         return date;
     }
 
-    public void setDate(Date comDate) {
+    public void setDate(Timestamp comDate) {
         this.date = comDate;
     }
 

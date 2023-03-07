@@ -1,10 +1,11 @@
 package com.officetourisme.dtos;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
+import java.sql.Timestamp;
 import java.util.Set;
 
 @Data
@@ -14,8 +15,10 @@ public class SortieDto {
     private Integer id;
     private String nom;
     private String description;
-    private Date dateDebut;
-    private Date dateFin;
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private Timestamp dateDebut;
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private Timestamp dateFin;
     private float prix;
     private String adresse;
     private int capacite;
