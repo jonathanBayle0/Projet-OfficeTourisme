@@ -3,7 +3,9 @@ package com.officetourisme.mappers;
 import com.officetourisme.dtos.CompteDto;
 import com.officetourisme.entities.Compte;
 import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Service;
 
+@Service
 public class CompteMapper {
     private ModelMapper modelMapper;
 

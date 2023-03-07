@@ -3,7 +3,9 @@ package com.officetourisme.mappers;
 import com.officetourisme.dtos.CommentaireDto;
 import com.officetourisme.entities.Commentaire;
 import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Service;
 
+@Service
 public class CommentaireMapper {
     private ModelMapper modelMapper;
 
