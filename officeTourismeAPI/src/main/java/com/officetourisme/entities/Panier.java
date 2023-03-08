@@ -5,7 +5,7 @@
 package com.officetourisme.entities;
 
 import java.io.Serializable;
-import jakarta.persistence.*;
+import javax.persistence.*;
 /**
  *
  * @author john-

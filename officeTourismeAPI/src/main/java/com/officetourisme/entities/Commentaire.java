@@ -4,8 +4,8 @@
  */
 package com.officetourisme.entities;
 
-import jakarta.persistence.*;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Date;
@@ -33,7 +33,6 @@ public class Commentaire implements Serializable {
     private int type;
     @Basic(optional = false)
     @Column(name = "com_date")
-    @Temporal(TemporalType.TIMESTAMP)
     private Timestamp date;
     @Column(name = "com_contenu")
     private String contenu;

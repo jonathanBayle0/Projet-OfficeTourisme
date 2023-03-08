@@ -6,7 +6,7 @@ package com.officetourisme.entities;
 
 import java.io.Serializable;
 import java.util.Set;
-import jakarta.persistence.*;
+import javax.persistence.*;
 
 /**
  *

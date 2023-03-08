@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Set;
-import jakarta.persistence.*;
+import javax.persistence.*;
 
 /**
  *
@@ -40,11 +40,9 @@ public class Sortie implements Serializable {
     private String description;
     @Basic(optional = false)
     @Column(name = "sor_dateDebut")
-    @Temporal(TemporalType.TIMESTAMP)
     private Timestamp dateDebut;
     @Basic(optional = false)
     @Column(name = "sor_dateFin")
-    @Temporal(TemporalType.TIMESTAMP)
     private Timestamp dateFin;
     @Basic(optional = false)
     @Column(name = "sor_prix")
