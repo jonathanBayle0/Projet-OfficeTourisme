@@ -24,7 +24,6 @@ public class Historique implements Serializable {
     @Basic(optional = false)
     @Column(name = "his_id")
     private Long id;
-    @Basic(optional = false)
     @Column(name = "cho_id")
     private String choix;
     @JoinColumn(name = "cpt_id", referencedColumnName = "cpt_id")
