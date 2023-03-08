@@ -9,11 +9,11 @@ import org.springframework.stereotype.Service;
 public class SortieMapper {
     private ModelMapper modelMapper;
 
-    public SortieDto SortieEntityToDto(Sortie Sortie) {
+    public SortieDto sortieEntityToDto(Sortie Sortie) {
         return modelMapper.map(Sortie, SortieDto.class);
     }
 
-    public Sortie SortieDtoToEntity(SortieDto SortieDto) {
+    public Sortie sortieDtoToEntity(SortieDto SortieDto) {
         return modelMapper.map(SortieDto, Sortie.class);
     }
 }
