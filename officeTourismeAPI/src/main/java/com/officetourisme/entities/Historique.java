@@ -21,7 +21,7 @@ public class Historique implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @Basic(optional = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "his_id")
     private Long id;
     @Column(name = "cho_id")

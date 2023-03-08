@@ -7,6 +7,7 @@ package com.officetourisme.entities;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.Objects;
 import java.util.Set;
 import javax.persistence.*;
 
@@ -30,7 +31,7 @@ public class Sortie implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @Basic(optional = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "sor_id")
     private Long id;
     @Basic(optional = false)
@@ -39,10 +40,10 @@ public class Sortie implements Serializable {
     @Column(name = "sor_description")
     private String description;
     @Basic(optional = false)
-    @Column(name = "sor_dateDebut")
+    @Column(name = "sor_date_debut")
     private Timestamp dateDebut;
     @Basic(optional = false)
-    @Column(name = "sor_dateFin")
+    @Column(name = "sor_date_fin")
     private Timestamp dateFin;
     @Basic(optional = false)
     @Column(name = "sor_prix")
@@ -81,113 +82,100 @@ public class Sortie implements Serializable {
         return id;
     }
 
-    public void setId(Long sorId) {
-        this.id = sorId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNom() {
         return nom;
     }
 
-    public void setNom(String sorNom) {
-        this.nom = sorNom;
+    public void setNom(String nom) {
+        this.nom = nom;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String sorDescription) {
-        this.description = sorDescription;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public Date getDateDebut() {
+    public Timestamp getDateDebut() {
         return dateDebut;
     }
 
-    public void setDateDebut(Timestamp sordateDebut) {
-        this.dateDebut = sordateDebut;
+    public void setDateDebut(Timestamp dateDebut) {
+        this.dateDebut = dateDebut;
     }
 
-    public Date getDateFin() {
+    public Timestamp getDateFin() {
         return dateFin;
     }
 
-    public void setDateFin(Timestamp sordateFin) {
-        this.dateFin = sordateFin;
+    public void setDateFin(Timestamp dateFin) {
+        this.dateFin = dateFin;
     }
 
     public float getPrix() {
         return prix;
     }
 
-    public void setPrix(float sorPrix) {
-        this.prix = sorPrix;
+    public void setPrix(float prix) {
+        this.prix = prix;
     }
 
     public String getAdresse() {
         return adresse;
     }
 
-    public void setAdresse(String sorAdresse) {
-        this.adresse = sorAdresse;
+    public void setAdresse(String adresse) {
+        this.adresse = adresse;
     }
 
     public int getCapacite() {
         return capacite;
     }
 
-    public void setCapacite(int sorCapacite) {
-        this.capacite = sorCapacite;
+    public void setCapacite(int capacite) {
+        this.capacite = capacite;
     }
 
     public Set<Historique> getHistorique() {
         return historique;
     }
 
-    public void setHistorique(Set<Historique> historiqueSet) {
-        this.historique = historiqueSet;
+    public void setHistorique(Set<Historique> historique) {
+        this.historique = historique;
     }
 
     public Set<Commentaire> getCommentaires() {
         return commentaires;
     }
 
-    public void setCommentaires(Set<Commentaire> commentaireSet) {
-        this.commentaires = commentaireSet;
+    public void setCommentaires(Set<Commentaire> commentaires) {
+        this.commentaires = commentaires;
     }
 
     public Set<Panier> getPanier() {
         return panier;
     }
 
-    public void setPanier(Set<Panier> panierSet) {
-        this.panier = panierSet;
+    public void setPanier(Set<Panier> panier) {
+        this.panier = panier;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Sortie)) return false;
+        Sortie sortie = (Sortie) o;
+        return Float.compare(sortie.getPrix(), getPrix()) == 0 && getCapacite() == sortie.getCapacite() && Objects.equals(getId(), sortie.getId()) && Objects.equals(getNom(), sortie.getNom()) && Objects.equals(getDescription(), sortie.getDescription()) && Objects.equals(getDateDebut(), sortie.getDateDebut()) && Objects.equals(getDateFin(), sortie.getDateFin()) && Objects.equals(getAdresse(), sortie.getAdresse()) && Objects.equals(getHistorique(), sortie.getHistorique()) && Objects.equals(getCommentaires(), sortie.getCommentaires()) && Objects.equals(getPanier(), sortie.getPanier());
     }
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
+        return Objects.hash(getId(), getNom(), getDescription(), getDateDebut(), getDateFin(), getPrix(), getAdresse(), getCapacite(), getHistorique(), getCommentaires(), getPanier());
     }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Sortie)) {
-            return false;
-        }
-        Sortie other = (Sortie) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "entities.Sortie[ sorId=" + id + " ]";
-    }
-    
 }
