@@ -20,8 +20,18 @@ public class CompteController {
         return compteService.getAllComptes();
     }
 
+    @GetMapping("/{id}")
+    public CompteDto getCompte(@PathVariable Long id) {
+        return compteService.getCompteById(id);
+    }
+
     @PostMapping
     public CompteDto saveCompte(final @RequestBody CompteDto compteDto) {
         return compteService.saveCompte(compteDto);
+    }
+
+    @DeleteMapping("/{id}")
+    public Boolean deleteCompte(@PathVariable Long id) {
+        return compteService.deleteCompte(id);
     }
 }
