@@ -11,7 +11,7 @@ import java.util.Set;
 @Setter
 @Getter
 public class CompteDto {
-    private Integer id;
+    private Long id;
     private String nom;
     private String prenom;
     private String mail;

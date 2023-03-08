@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 @Getter
 public class PanierDto {
-    private Integer id;
-    private Integer compteId;
-    private Integer sortieId;
+    private Long id;
+    private Long compteId;
+    private Long sortieId;
 }

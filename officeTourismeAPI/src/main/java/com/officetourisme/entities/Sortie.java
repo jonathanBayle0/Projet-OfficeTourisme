@@ -32,7 +32,7 @@ public class Sortie implements Serializable {
     @Id
     @Basic(optional = false)
     @Column(name = "sor_id")
-    private Integer id;
+    private Long id;
     @Basic(optional = false)
     @Column(name = "sor_nom")
     private String nom;
@@ -63,11 +63,11 @@ public class Sortie implements Serializable {
     public Sortie() {
     }
 
-    public Sortie(Integer id) {
+    public Sortie(Long id) {
         this.id = id;
     }
 
-    public Sortie(Integer id, String nom, Timestamp dateDebut, Timestamp dateFin, float prix, String adresse, int capacite) {
+    public Sortie(Long id, String nom, Timestamp dateDebut, Timestamp dateFin, float prix, String adresse, int capacite) {
         this.id = id;
         this.nom = nom;
         this.dateDebut = dateDebut;
@@ -77,11 +77,11 @@ public class Sortie implements Serializable {
         this.capacite = capacite;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer sorId) {
+    public void setId(Long sorId) {
         this.id = sorId;
     }
 

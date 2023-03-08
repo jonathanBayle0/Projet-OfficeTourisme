@@ -8,8 +8,8 @@ import lombok.Setter;
 @Setter
 @Getter
 public class HistoriqueDto {
-    private Integer id;
+    private Long id;
     private String choix;
-    private Integer compteId;
-    private Integer sortieId;
+    private Long compteId;
+    private Long sortieId;
 }

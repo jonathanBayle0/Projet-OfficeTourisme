@@ -23,7 +23,7 @@ public class Historique implements Serializable {
     @Id
     @Basic(optional = false)
     @Column(name = "his_id")
-    private Integer id;
+    private Long id;
     @Basic(optional = false)
     @Column(name = "cho_id")
     private String choix;
@@ -37,20 +37,20 @@ public class Historique implements Serializable {
     public Historique() {
     }
 
-    public Historique(Integer id) {
+    public Historique(Long id) {
         this.id = id;
     }
 
-    public Historique(Integer id, String choix) {
+    public Historique(Long id, String choix) {
         this.id = id;
         this.choix = choix;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer hisId) {
+    public void setId(Long hisId) {
         this.id = hisId;
     }
 

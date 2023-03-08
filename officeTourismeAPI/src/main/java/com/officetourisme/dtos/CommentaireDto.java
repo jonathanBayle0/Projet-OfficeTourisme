@@ -11,11 +11,11 @@ import java.sql.Timestamp;
 @Setter
 @Getter
 public class CommentaireDto {
-    private Integer id;
+    private Long id;
     private int type;
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Timestamp date;
     private String contenu;
-    private Integer compteId;
-    private Integer sortieId;
+    private Long compteId;
+    private Long sortieId;
 }

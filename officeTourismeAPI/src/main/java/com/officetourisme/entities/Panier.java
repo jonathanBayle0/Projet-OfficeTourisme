@@ -21,7 +21,7 @@ public class Panier implements Serializable {
     @Id
     @Basic(optional = false)
     @Column(name = "pan_id")
-    private Integer id;
+    private Long id;
     @JoinColumn(name = "cpt_id", referencedColumnName = "cpt_id")
     @ManyToOne(optional = false)
     private Compte compte;
@@ -32,15 +32,15 @@ public class Panier implements Serializable {
     public Panier() {
     }
 
-    public Panier(Integer id) {
+    public Panier(Long id) {
         this.id = id;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer panId) {
+    public void setId(Long panId) {
         this.id = panId;
     }
 

@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface CommentaireService {
     CommentaireDto saveCommentaire(CommentaireDto commentaireDto);
-    CommentaireDto getCommentaireById(Integer commentaireId);
-    boolean deleteCommentaire(Integer commentaireId);
+    CommentaireDto getCommentaireById(Long commentaireId);
+    boolean deleteCommentaire(Long commentaireId);
     List<CommentaireDto> getAllCommentaires();
 }

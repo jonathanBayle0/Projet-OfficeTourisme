@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface SortieService {
     SortieDto saveSortie(SortieDto sortieDto);
-    SortieDto getSortieById(Integer sortieId);
-    boolean deleteSortie(Integer sortieId);
+    SortieDto getSortieById(Long sortieId);
+    boolean deleteSortie(Long sortieId);
     List<SortieDto> getAllSorties();
 }

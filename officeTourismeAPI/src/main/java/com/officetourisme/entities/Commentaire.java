@@ -25,9 +25,9 @@ public class Commentaire implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @Basic(optional = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "com_id")
-    private Integer id;
+    private Long id;
     @Basic(optional = false)
     @Column(name = "com_type")
     private int type;
@@ -46,21 +46,21 @@ public class Commentaire implements Serializable {
     public Commentaire() {
     }
 
-    public Commentaire(Integer id) {
+    public Commentaire(Long id) {
         this.id = id;
     }
 
-    public Commentaire(Integer id, int type, Timestamp date) {
+    public Commentaire(Long id, int type, Timestamp date) {
         this.id = id;
         this.type = type;
         this.date = date;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer comId) {
+    public void setId(Long comId) {
         this.id = comId;
     }
 
@@ -72,7 +72,7 @@ public class Commentaire implements Serializable {
         this.type = comType;
     }
 
-    public Date getDate() {
+    public Timestamp getDate() {
         return date;
     }
 

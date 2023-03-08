@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface CompteService {
     CompteDto saveCompte(CompteDto compteDto);
-    CompteDto getCompteById(Integer compteId);
-    boolean deleteCompte(Integer compteId);
+    CompteDto getCompteById(Long compteId);
+    boolean deleteCompte(Long compteId);
     List<CompteDto> getAllComptes();
 }

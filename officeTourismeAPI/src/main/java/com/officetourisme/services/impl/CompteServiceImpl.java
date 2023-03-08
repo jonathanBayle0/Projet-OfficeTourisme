@@ -30,13 +30,13 @@ public class CompteServiceImpl implements CompteService {
     }
 
     @Override
-    public CompteDto getCompteById(Integer compteId) {
+    public CompteDto getCompteById(Long compteId) {
         Compte compte = compteRepository.findById(compteId).orElseThrow(() -> new EntityNotFoundException("Compte inexistant"));
         return compteMapper.compteEntityToDto(compte);
     }
 
     @Override
-    public boolean deleteCompte(Integer compteId) {
+    public boolean deleteCompte(Long compteId) {
         compteRepository.findById(compteId).orElseThrow(() -> new EntityNotFoundException("Compte inexistant"));
         compteRepository.deleteById(compteId);
         return true;

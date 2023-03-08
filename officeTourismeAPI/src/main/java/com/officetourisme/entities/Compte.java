@@ -4,6 +4,8 @@
  */
 package com.officetourisme.entities;
 
+import lombok.Data;
+
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.*;
@@ -13,6 +15,7 @@ import javax.persistence.*;
  * @author john-
  */
 @Entity
+@Data
 @Table(name = "t_compte_cpt")
 @NamedQueries({
     @NamedQuery(name = "Compte.findAll", query = "SELECT c FROM Compte c"),
@@ -26,9 +29,9 @@ public class Compte implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @Basic(optional = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cpt_id")
-    private Integer id;
+    private Long id;
     @Basic(optional = false)
     @Column(name = "cpt_nom")
     private String nom;
@@ -54,11 +57,11 @@ public class Compte implements Serializable {
     public Compte() {
     }
 
-    public Compte(Integer id) {
+    public Compte(Long id) {
         this.id = id;
     }
 
-    public Compte(Integer id, String nom, String prenom, String mail, String mdp, Character statut) {
+    public Compte(Long id, String nom, String prenom, String mail, String mdp, Character statut) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
@@ -67,11 +70,11 @@ public class Compte implements Serializable {
         this.statut = statut;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer cptId) {
+    public void setId(Long cptId) {
         this.id = cptId;
     }
 

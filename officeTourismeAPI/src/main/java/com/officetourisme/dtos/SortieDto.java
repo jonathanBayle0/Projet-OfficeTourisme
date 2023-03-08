@@ -12,7 +12,7 @@ import java.util.Set;
 @Getter
 @Setter
 public class SortieDto {
-    private Integer id;
+    private Long id;
     private String nom;
     private String description;
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")

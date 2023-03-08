@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface HistoriqueService {
     HistoriqueDto saveHistorique(HistoriqueDto historiqueDto);
-    HistoriqueDto getHistoriqueById(Integer historiqueId);
-    boolean deleteHistorique(Integer historiqueId);
+    HistoriqueDto getHistoriqueById(Long historiqueId);
+    boolean deleteHistorique(Long historiqueId);
     List<HistoriqueDto> getAllHistoriques();
 }
