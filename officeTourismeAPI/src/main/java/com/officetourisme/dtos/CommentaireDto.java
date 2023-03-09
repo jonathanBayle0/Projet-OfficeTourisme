@@ -1,21 +1,31 @@
 package com.officetourisme.dtos;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import com.officetourisme.entities.Commentaire;
+import lombok.*;
 
-import java.sql.Timestamp;
+import java.io.Serializable;
 
 @Data
-@Setter
 @Getter
-public class CommentaireDto {
-    private Long id;
-    private int type;
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
-    private Timestamp date;
+@Setter
+public class CommentaireDto implements Serializable {
+
+    private String id;
+    private String type;
+    private String date;
     private String contenu;
-    private Long compteId;
-    private Long sortieId;
+    private String compteId;
+    private String sortieId;
+
+    public CommentaireDto(Commentaire commentaire) {
+        this.id = commentaire.getId();
+        this.type = commentaire.getType();
+        this.date = commentaire.getDate();
+        this.contenu = commentaire.getContenu();
+        this.compteId = commentaire.getCompteId();
+        this.sortieId = commentaire.getSortieId();
+    }
+
+    public CommentaireDto() {
+    }
 }

@@ -5,128 +5,89 @@
 package com.officetourisme.entities;
 
 
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Timestamp;
-import java.util.Date;
 
 /**
  *
- * @author john-
+ * @author jonathan
  */
-@Entity
-@Table(name = "t_commentaire_com")
-@NamedQueries({
-    @NamedQuery(name = "Commentaire.findAll", query = "SELECT c FROM Commentaire c"),
-    @NamedQuery(name = "Commentaire.findByComId", query = "SELECT c FROM Commentaire c WHERE c.id = :comId"),
-    @NamedQuery(name = "Commentaire.findByComType", query = "SELECT c FROM Commentaire c WHERE c.type = :comType"),
-    @NamedQuery(name = "Commentaire.findByComDate", query = "SELECT c FROM Commentaire c WHERE c.date = :comDate")})
-public class Commentaire implements Serializable {
+@Document(collection = "t_commentaire_com")
+public class Commentaire {
 
-    private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "com_id")
-    private Long id;
-    @Basic(optional = false)
-    @Column(name = "com_type")
-    private int type;
-    @Basic(optional = false)
-    @Column(name = "com_date")
-    private Timestamp date;
-    @Column(name = "com_contenu")
+    private String id;
+    @Field("com_type")
+    private String type;
+    @Field("com_date")
+    private String date;
+    @Field("com_contenu")
     private String contenu;
-    @JoinColumn(name = "cpt_id", referencedColumnName = "cpt_id")
-    @ManyToOne(optional = false)
-    private Compte compte;
-    @JoinColumn(name = "sor_id", referencedColumnName = "sor_id")
-    @ManyToOne(optional = false)
-    private Sortie sortie;
+    @Field("cpt_id")
+    private String compteId;
+    @Field("sor_id")
+    private String sortieId;
 
     public Commentaire() {
     }
 
-    public Commentaire(Long id) {
-        this.id = id;
-    }
-
-    public Commentaire(Long id, int type, Timestamp date) {
+    public Commentaire(String id, String type, String date, String contenu, String compteId, String sortieId) {
         this.id = id;
         this.type = type;
         this.date = date;
+        this.contenu = contenu;
+        this.compteId = compteId;
+        this.sortieId = sortieId;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long comId) {
-        this.id = comId;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public int getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(int comType) {
-        this.type = comType;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public Timestamp getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Timestamp comDate) {
-        this.date = comDate;
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getContenu() {
         return contenu;
     }
 
-    public void setContenu(String comContenu) {
-        this.contenu = comContenu;
+    public void setContenu(String contenu) {
+        this.contenu = contenu;
     }
 
-    public Compte getCompte() {
-        return compte;
+    public String getCompteId() {
+        return compteId;
     }
 
-    public void setCompte(Compte cptId) {
-        this.compte = cptId;
+    public void setCompteId(String compteId) {
+        this.compteId = compteId;
     }
 
-    public Sortie getSortie() {
-        return sortie;
+    public String getSortieId() {
+        return sortieId;
     }
 
-    public void setSortie(Sortie sorId) {
-        this.sortie = sorId;
+    public void setSortieId(String sortieId) {
+        this.sortieId = sortieId;
     }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Commentaire)) {
-            return false;
-        }
-        Commentaire other = (Commentaire) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "entities.Commentaire[ comId=" + id + " ]";
-    }
-    
 }

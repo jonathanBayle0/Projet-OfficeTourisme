@@ -23,6 +23,6 @@ public class SortieDto {
     private String adresse;
     private int capacite;
     private Set<HistoriqueDto> historique;
-    private Set<CommentaireDto> commentaires;
     private Set<PanierDto> panier;
+    private Set<SortieOptionDto> sortieOptions;
 }

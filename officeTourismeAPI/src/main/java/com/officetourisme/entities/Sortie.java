@@ -6,8 +6,6 @@ package com.officetourisme.entities;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.Date;
-import java.util.Objects;
 import java.util.Set;
 import javax.persistence.*;
 
@@ -57,25 +55,26 @@ public class Sortie implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "sortie")
     private Set<Historique> historique;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "sortie")
-    private Set<Commentaire> commentaires;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sortie")
     private Set<Panier> panier;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sortie")
+    private Set<SortieOption> sortieOptions;
 
     public Sortie() {
     }
 
-    public Sortie(Long id) {
-        this.id = id;
-    }
-
-    public Sortie(Long id, String nom, Timestamp dateDebut, Timestamp dateFin, float prix, String adresse, int capacite) {
+    public Sortie(Long id, String nom, String description, Timestamp dateDebut, Timestamp dateFin, float prix, String adresse, int capacite, Set<Historique> historique, Set<Panier> panier, Set<SortieOption> sortieOptions) {
         this.id = id;
         this.nom = nom;
+        this.description = description;
         this.dateDebut = dateDebut;
         this.dateFin = dateFin;
         this.prix = prix;
         this.adresse = adresse;
         this.capacite = capacite;
+        this.historique = historique;
+        this.panier = panier;
+        this.sortieOptions = sortieOptions;
     }
 
     public Long getId() {
@@ -150,14 +149,6 @@ public class Sortie implements Serializable {
         this.historique = historique;
     }
 
-    public Set<Commentaire> getCommentaires() {
-        return commentaires;
-    }
-
-    public void setCommentaires(Set<Commentaire> commentaires) {
-        this.commentaires = commentaires;
-    }
-
     public Set<Panier> getPanier() {
         return panier;
     }
@@ -166,16 +157,11 @@ public class Sortie implements Serializable {
         this.panier = panier;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Sortie)) return false;
-        Sortie sortie = (Sortie) o;
-        return Float.compare(sortie.getPrix(), getPrix()) == 0 && getCapacite() == sortie.getCapacite() && Objects.equals(getId(), sortie.getId()) && Objects.equals(getNom(), sortie.getNom()) && Objects.equals(getDescription(), sortie.getDescription()) && Objects.equals(getDateDebut(), sortie.getDateDebut()) && Objects.equals(getDateFin(), sortie.getDateFin()) && Objects.equals(getAdresse(), sortie.getAdresse()) && Objects.equals(getHistorique(), sortie.getHistorique()) && Objects.equals(getCommentaires(), sortie.getCommentaires()) && Objects.equals(getPanier(), sortie.getPanier());
+    public Set<SortieOption> getSortieOptions() {
+        return sortieOptions;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId(), getNom(), getDescription(), getDateDebut(), getDateFin(), getPrix(), getAdresse(), getCapacite(), getHistorique(), getCommentaires(), getPanier());
+    public void setSortieOptions(Set<SortieOption> sortieOptions) {
+        this.sortieOptions = sortieOptions;
     }
 }

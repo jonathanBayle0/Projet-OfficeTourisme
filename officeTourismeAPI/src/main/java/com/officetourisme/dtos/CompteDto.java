@@ -18,6 +18,5 @@ public class CompteDto {
     private String mdp;
     private Character statut;
     private Set<Historique> historique;
-    private Set<Commentaire> commentaires;
     private Set<Panier> panier;
 }

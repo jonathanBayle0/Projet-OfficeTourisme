@@ -21,7 +21,7 @@ public class CommentaireController {
     }
 
     @GetMapping("/{id}")
-    public CommentaireDto getCommentaire(@PathVariable Long id) {
+    public CommentaireDto getCommentaire(@PathVariable String id) {
         return commentaireService.getCommentaireById(id);
     }
 
@@ -31,7 +31,7 @@ public class CommentaireController {
     }
 
     @DeleteMapping("/{id}")
-    public Boolean deleteCommentaire(@PathVariable Long id) {
+    public Boolean deleteCommentaire(@PathVariable String id) {
         return commentaireService.deleteCommentaire(id);
     }
 }

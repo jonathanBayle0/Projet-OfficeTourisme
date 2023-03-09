@@ -50,8 +50,6 @@ public class Compte implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "compte")
     private Set<Historique> historique;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "compte")
-    private Set<Commentaire> commentaires;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "compte")
     private Set<Panier> panier;
 
     public Compte() {
@@ -124,14 +122,6 @@ public class Compte implements Serializable {
 
     public void setHistorique(Set<Historique> historiqueSet) {
         this.historique = historiqueSet;
-    }
-
-    public Set<Commentaire> getCommentaires() {
-        return commentaires;
-    }
-
-    public void setCommentaires(Set<Commentaire> commentaireSet) {
-        this.commentaires = commentaireSet;
     }
 
     public Set<Panier> getPanier() {

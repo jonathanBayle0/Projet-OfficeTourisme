@@ -30,13 +30,13 @@ public class CommentaireServiceImpl implements CommentaireService {
     }
 
     @Override
-    public CommentaireDto getCommentaireById(Long commentaireId) {
+    public CommentaireDto getCommentaireById(String commentaireId) {
         Commentaire commentaire = commentaireRepository.findById(commentaireId).orElseThrow(() -> new EntityNotFoundException("Commentaire inexistant"));
         return commentaireMapper.commentaireEntityToDto(commentaire);
     }
 
     @Override
-    public boolean deleteCommentaire(Long commentaireId) {
+    public boolean deleteCommentaire(String commentaireId) {
         Commentaire commentaire = commentaireRepository.findById(commentaireId).orElseThrow(() -> new EntityNotFoundException("Commentaire inexistant"));
         commentaireRepository.deleteById(commentaireId);
         return true;

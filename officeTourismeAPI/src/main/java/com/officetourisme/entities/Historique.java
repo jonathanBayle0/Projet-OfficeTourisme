@@ -5,6 +5,7 @@
 package com.officetourisme.entities;
 
 import java.io.Serializable;
+import java.util.Set;
 import javax.persistence.*;
 
 /**
@@ -15,8 +16,7 @@ import javax.persistence.*;
 @Table(name = "t_historique_his")
 @NamedQueries({
     @NamedQuery(name = "Historique.findAll", query = "SELECT h FROM Historique h"),
-    @NamedQuery(name = "Historique.findByHisId", query = "SELECT h FROM Historique h WHERE h.id = :hisId"),
-    @NamedQuery(name = "Historique.findByChoId", query = "SELECT h FROM Historique h WHERE h.choix = :choId")})
+    @NamedQuery(name = "Historique.findByHisId", query = "SELECT h FROM Historique h WHERE h.id = :hisId")})
 public class Historique implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -24,8 +24,6 @@ public class Historique implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "his_id")
     private Long id;
-    @Column(name = "cho_id")
-    private String choix;
     @JoinColumn(name = "cpt_id", referencedColumnName = "cpt_id")
     @ManyToOne(optional = false)
     private Compte compte;
@@ -33,73 +31,48 @@ public class Historique implements Serializable {
     @ManyToOne(optional = false)
     private Sortie sortie;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "historique")
+    private Set<ChoixOption> choixOptions;
+
     public Historique() {
     }
 
-    public Historique(Long id) {
+    public Historique(Long id, Compte compte, Sortie sortie, Set<ChoixOption> choixOptions) {
         this.id = id;
-    }
-
-    public Historique(Long id, String choix) {
-        this.id = id;
-        this.choix = choix;
+        this.compte = compte;
+        this.sortie = sortie;
+        this.choixOptions = choixOptions;
     }
 
     public Long getId() {
         return id;
     }
 
-    public void setId(Long hisId) {
-        this.id = hisId;
-    }
-
-    public String getChoix() {
-        return choix;
-    }
-
-    public void setChoix(String choId) {
-        this.choix = choId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Compte getCompte() {
         return compte;
     }
 
-    public void setCompte(Compte cptId) {
-        this.compte = cptId;
+    public void setCompte(Compte compte) {
+        this.compte = compte;
     }
 
     public Sortie getSortie() {
         return sortie;
     }
 
-    public void setSortie(Sortie sorId) {
-        this.sortie = sorId;
+    public void setSortie(Sortie sortie) {
+        this.sortie = sortie;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
+    public Set<ChoixOption> getChoixOptions() {
+        return choixOptions;
     }
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Historique)) {
-            return false;
-        }
-        Historique other = (Historique) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+    public void setChoixOptions(Set<ChoixOption> choixOptions) {
+        this.choixOptions = choixOptions;
     }
-
-    @Override
-    public String toString() {
-        return "entities.Historique[ hisId=" + id + " ]";
-    }
-    
 }
