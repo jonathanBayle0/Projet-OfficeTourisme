@@ -17,6 +17,6 @@ public class CompteDto {
     private String mail;
     private String mdp;
     private Character statut;
-    private Set<Historique> historique;
-    private Set<Panier> panier;
+    private Set<HistoriqueDto> historique;
+    private Set<PanierDto> panier;
 }
