@@ -2,8 +2,12 @@ package com.officetourisme.controllers;
 
 import com.officetourisme.dtos.CommentaireDto;
 import com.officetourisme.services.impl.CommentaireServiceImpl;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityExistsException;
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @RestController
@@ -21,13 +25,24 @@ public class CommentaireController {
     }
 
     @GetMapping("/{id}")
-    public CommentaireDto getCommentaire(@PathVariable String id) {
-        return commentaireService.getCommentaireById(id);
+    public ResponseEntity<?> getCommentaire(@PathVariable String id) {
+        CommentaireDto commentaireDto;
+        try {
+            commentaireDto = commentaireService.getCommentaireById(id);
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity<>("Erreur : Message inexistant", HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(commentaireDto, HttpStatus.OK);
     }
 
     @PostMapping
-    public CommentaireDto saveCommentaire(final @RequestBody CommentaireDto commentaireDto) {
-        return commentaireService.saveCommentaire(commentaireDto);
+    public ResponseEntity<?> saveCommentaire(final @RequestBody CommentaireDto commentaireDto) {
+         try {
+             commentaireService.saveCommentaire(commentaireDto);
+         } catch (IllegalArgumentException e) {
+             return new ResponseEntity<>("Erreur : L'utilisateur doit avoir participé à l'activité pour commenter", HttpStatus.BAD_REQUEST);
+         }
+         return new ResponseEntity<>(commentaireDto, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")

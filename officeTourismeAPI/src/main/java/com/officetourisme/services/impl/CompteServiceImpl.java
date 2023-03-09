@@ -7,6 +7,7 @@ import com.officetourisme.repositories.CompteRepository;
 import com.officetourisme.services.CompteService;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,7 @@ public class CompteServiceImpl implements CompteService {
 
     @Override
     public CompteDto saveCompte(CompteDto compteDto) {
+        if (isMailExist(compteDto)) throw new EntityExistsException();
         Compte compte = compteMapper.compteDtoToEntity(compteDto);
         compteRepository.save(compte);
         return compteDto;
@@ -51,5 +53,19 @@ public class CompteServiceImpl implements CompteService {
             comptesDto.add(compteMapper.compteEntityToDto(compte));
         });
         return comptesDto;
+    }
+
+    /**
+     * Vérifie si le mail est déjà utilisé pour un autre compte
+     * @param compte
+     * @return true si le mail est déjà utilisé, false sinon
+     */
+    public boolean isMailExist(CompteDto compte) {
+        List<CompteDto> comptes = this.getAllComptes();
+        for(CompteDto cpt : comptes) {
+            // On si vérifie que l'email existe (et que les comptes sont différents)
+            if(compte.getMail().equals(cpt.getMail()) && compte.getMail() != cpt.getMail()) return true;
+        }
+        return false;
     }
 }
