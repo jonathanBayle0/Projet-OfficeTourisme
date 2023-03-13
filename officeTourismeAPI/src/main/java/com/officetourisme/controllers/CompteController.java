@@ -35,6 +35,18 @@ public class CompteController {
         return new ResponseEntity<>(compteDto, HttpStatus.OK);
     }
 
+    @GetMapping("/mail/{mail}")
+    public ResponseEntity<?> getCompteByMail(@PathVariable String mail) {
+        List<CompteDto> comptes = getAllComptes();
+        for (CompteDto cpt : comptes) {
+            if (cpt.getMail().equals(mail)) {
+                return new ResponseEntity<>(cpt, HttpStatus.OK);
+            }
+        }
+
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
     @PostMapping
     public ResponseEntity<?> saveCompte(final @RequestBody CompteDto compteDto) {
         try {

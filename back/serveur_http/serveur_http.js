@@ -4,6 +4,7 @@ const util = require("util")
 const validation = require('./validation.js')
 const bd = require('./bd.js')
 const jwt = require('jsonwebtoken')
+const compte = require('./compte.js')
 
 const { private_key } = require('./config')
 const { resolve } = require('path')
@@ -22,7 +23,7 @@ var server = app.listen(port_http, function () {
 })
 
 app.post("/enregistrer_livre", function (req, res) {
-    
+
     // const authHeader = req.headers.authorization
     // let token;
     // if (authHeader) {
@@ -95,22 +96,52 @@ app.post("/connexion", function (req, res) {
     console.log("POST connexion")
     console.log("req = " + util.inspect(req))
 
-    let ident = req.body.ident
-    let mdp = req.body.mdp
+    let cpt = new compte.Compte(req.body)
+    console.log("Objet compte créé : " + JSON.stringify(cpt))
 
-    if ((ident == "ubo") && (mdp == "1234")) {
+    let v = validation.valider_attributs(cpt, compte.donnees_validation)
 
+    // Verification des bons parametres d'entree
+    if (v.res) {
 
-        let token = jwt.sign({
-            data: {
-                ident: ident,
-                role: "admin",
-            }
-        }, private_key, { expiresIn: 60 * 60 }); // 60 minutes
+        // On recupere les informations de la base de donnes pour la verification
+        fetch('http://localhost:8080/comptes/mail/' + cpt.mail)
+            .then((response) => {
+                // Traitement si l'email n'existe pas
+                if (!response.ok) {
+                    res.status(400).send({ res: false, mess: "Connexion impossible, l'email n'existe pas !" })
+                    return;
+                }
+                return response.json();
+            })
+            // Traitement si l'email existe
+            .then((json) => {
+                let compteBDD = json;
+                // Verification du mot de passe
+                if (cpt.mdp === compteBDD.mdp) {
+                    // Creation du token
+                    const expiresIn = 60 * 2 // 2 minutes
+                    let token = jwt.sign({
+                        data: {
+                            mail: compteBDD.mail,
+                            role: compteBDD.statut,
+                        }
+                    }, private_key, { expiresIn: expiresIn });
+                    const expirationDate = new Date(Date.now() + expiresIn * 1000);
 
-        res.send({ res: true, token: token, role: "admin", mess: "Succès, connexion réussie" })
+                    res.send({ res: true, token: token, role: compteBDD.statut, expiration: expirationDate, mess: "Succès, connexion réussie" })
+                } else {
+                    // Si le mot de passe ne correspond pas
+                    res.status(400).send({ res: false, mess: "Connexion impossible, mot de passe incorrect" })
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+            });
     } else {
-        res.send({ res: false, mess: "Connexion impossible" })
+        let mess = ["Erreur : Identifiant de connexion erroné"]
+        mess.push(v.lmess)
+        res.status(404).send({ res: false, mess: mess })
     }
 
 })

@@ -1,35 +1,47 @@
-import React, { Component } from 'react'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { Route, Routes, useLocation } from 'react-router-dom'
+import { isLogged, isAdmin } from './authentification.js'
+import { AdminRouterGuard } from './administration/AdminRouterGuard.js'
 
+import Menu from './Menu.js'
 import Accueil from './Accueil.js'
 import Connexion from './Connexion.js'
 import Inscription from './Inscription.js'
+import AccueilAdmin from './administration/AccueilAdmin.js'
+
+function App() {
+  const [connecte, setConnecte] = useState(false);
+  const [role, setRole] = useState(false);
+
+  const location = useLocation();
+
+  useEffect(() => {
+    setConnecte(isLogged());
+    setRole(isAdmin());
+  }, [location]);
 
 
-class App extends React.Component {
+  const handleConnecteChange = (newValue) => {
+    setConnecte(newValue);
+  };
 
-  constructor(props) {
-    super(props)
+  const handleRoleChange = (newValue) => {
+    setRole(newValue);
+  };
 
-  }
-
-  render() {
-    return (
-      <div>
-        <Router>
-          <Routes>
-            <Route exact path="/" element={<Accueil />} />
-            <Route exact path="/Connexion" element={<Connexion />} />
-            <Route exact path="/Inscription" element={<Inscription />} />
-          </Routes>
-
-        </Router>
-      </div>
-
-
-
-    )
-  }
+  return (
+    <div>
+      <Menu connecte={connecte} admin={role} />
+      <Routes>
+        <Route exact path="/" element={<Accueil />} />
+        <Route exact path="/Connexion" element={<Connexion onConnecteChange={handleConnecteChange} onRoleChange={handleRoleChange} />} />
+        <Route exact path="/Inscription" element={<Inscription />} />
+        <Route element={<AdminRouterGuard />}>
+          <Route path="/admin/*" element={<AccueilAdmin />} />
+        </Route>
+      </Routes>
+    </div>
+  );
 }
 
-export default App
+export default App;
