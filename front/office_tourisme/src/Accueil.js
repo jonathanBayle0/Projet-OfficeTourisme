@@ -1,10 +1,6 @@
 import React from 'react'
 
-class Accueil extends React.Component {
-
-    constructor(props) {
-        super(props)
-    }
+class Sortie extends React.Component {
 
     render() {
         return (
@@ -14,4 +10,4 @@ class Accueil extends React.Component {
         )
     }
 }
-export default Accueil
+export default Sortie

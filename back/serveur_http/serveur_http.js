@@ -2,13 +2,14 @@ const express = require('express')     // chargement du module express
 const config = require("./config.js") // chargement de la configuration
 const util = require("util")
 const validation = require('./validation.js')
-const bd = require('./bd.js')
 const jwt = require('jsonwebtoken')
 const compte = require('./compte.js')
+const sortie = require('./sortie.js')
 
 const { private_key } = require('./config')
 const { resolve } = require('path')
 const { type } = require('os')
+const { response } = require('express')
 
 const base = config.base
 const port_http = config.port_http
@@ -22,74 +23,53 @@ var server = app.listen(port_http, function () {
     console.log('Express server listening on port ' + port_http)
 })
 
-app.post("/enregistrer_livre", function (req, res) {
+app.post("/ajout_sortie", function (req, res) {
+    console.log("POST ajout_sortie")
+    // Verification des droits 
+    const authHeader = req.headers.authorization
+    if (!authHeader) {
+        res.status(401).send({ res: false, mess: "Erreur : il faut être authentifié pour effectuer cette action" })
+        return;
+    }
+    let token = authHeader.split(' ')[1]
+    const connecte = verify_token(token)
+    if (! connecte.res) {
+        res.status(401).send({ res: false, mess: connecte.err })
+    }
 
-    // const authHeader = req.headers.authorization
-    // let token;
-    // if (authHeader) {
-    //     token = authHeader.split(' ')[1]
-    //     console.log("token = " + token)
-    // }
+    let s = new sortie.Sortie(req.body)
+    console.log("Objet sortie créé : " + JSON.stringify(s))
 
-    // let ident
-    // let role
-    // try {
-    //     let decoded = jwt.verify(token, private_key)
+    let mess = "Objet sortie créé : " + JSON.stringify(s)
 
-    //     console.log("TOKEN");
-    //     console.log(decoded.data);
-    //     ident = decoded.data.ident
-    //     role = decoded.data.role
-
-    //     let exp = (decoded.exp * 1000) - Date.now()
-    //     // temps restant en ms
-
-    // } catch (e) {
-    //     console.log("Erreur jwt.verify " + e)
-    // }
-
-
-    console.log("POST enregistrer_livre")
-    // console.log("req = " + util.inspect(req))
-    console.log("titre = " + req.body.titre)
-    console.log("auteur = " + req.body.auteur)
-    console.log("annee = " + req.body.annee)
-
-    let l = new livre.Livre(req.body)
-    console.log("Objet livre créé : " + JSON.stringify(l))
-
-    let mess = "Objet livre créé : " + JSON.stringify(l)
-
-    let v = validation.valider_attributs(l, livre.donnees_validation)
-    if (v.res) { // + && ident == "ubo" && role == "admin" pour l'identification
-        mess += "<br>La validation des champs a été effectuée avec succès"
-        mess += "<br>Livre à enregistrer en BD : "
-        mess += `<br>Titre = ${l.titre}`
-        mess += `<br>Auteur = ${l.auteur}`
-        mess += `<br>Année = ${l.annee}`
-
-        console.log("Enregistrement dans la base de donnée")
-        var promise = new Promise((resolve, reject) => {
-            bd.enregistrer_livre(l, resolve, reject)
+    let v = validation.valider_attributs(s, sortie.donnees_validation)
+    console.log(s);
+    if (v.res) {
+        // Enregistrement de la sortie en Base de donnees
+        fetch('http://localhost:8080/sorties', {
+            headers: {
+                "Content-Type": "application/json",
+            },
+            method: "POST",
+            body: JSON.stringify(s)
         })
+        .then((response) => {
+            if (!response.ok) {
+                console.log("Erreur : " + JSON.stringify(response));
+            } else {
+                console.log("Réussi : " + JSON.stringify(response));
+            }
 
-        promise.then(() => {
-            console.log("Livre correctement inséré")
         })
-            .catch((err) => {
-                console.log(err);
-            })
+        .catch((err) => {
+            console.log("Erreur ! " + JSON.stringify(err));
+        })
     }
     else {
         mess += "<br>Echec validation"
     }
-    // if (typeof ident !== 'undefined' && typeof role !== 'undefined') {
-    // } else {
-    //     mess += "<br>Echec validation"
-    //     mess += "<br>Connexion requise"
-    // } 
 
-    res.send({ res: v.res, mess: mess, lerr: v.lmess })
+    res.send({ res: v.res, mess: mess })
 })
 
 app.post("/connexion", function (req, res) {
@@ -120,7 +100,7 @@ app.post("/connexion", function (req, res) {
                 // Verification du mot de passe
                 if (cpt.mdp === compteBDD.mdp) {
                     // Creation du token
-                    const expiresIn = 60 * 2 // 2 minutes
+                    const expiresIn = 60 * 60 // 60 minutes
                     let token = jwt.sign({
                         data: {
                             mail: compteBDD.mail,
@@ -145,3 +125,22 @@ app.post("/connexion", function (req, res) {
     }
 
 })
+
+
+function verify_token(token) {
+    try {
+        let decoded = jwt.verify(token, private_key)
+
+        // Verification de l'expiration du jeton
+        let exp = (decoded.exp * 1000) - Date.now()
+        if (exp < Date.now()) {
+            return { res: false, err: "Erreur : Jeton expiré" }
+        }
+
+        return { res: true, data: decoded.data }
+
+    } catch (e) {
+        console.log("Erreur jwt.verify " + e)
+        return { res: false, err: "Erreur : Jeton incorrect" }
+    }
+}

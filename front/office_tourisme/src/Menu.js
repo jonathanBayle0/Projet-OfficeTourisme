@@ -12,7 +12,8 @@ function Menu(props) {
                     <ul>
                         <li><a href="/admin/Accueil">Accueil</a></li>
                         <li><a href="/Connexion">Connexion</a></li>
-                        <li><a href="/Inscription">Inscription</a></li>
+                        <li><a href="/admin/sortie/AjoutSortie">Ajouter sortie</a></li>
+                        <li><a href="/admin/sortie/GestionSortie">Gestion des sorties</a></li>
                         <li onClick={() => deconnexion()}><a href="/">Déconnexion</a></li>
                     </ul>
                 </div>
@@ -25,7 +26,6 @@ function Menu(props) {
                     <ul>
                         <li><a href="/">Accueil</a></li>
                         <li><a href="/Connexion">Connexion</a></li>
-                        <li><a href="/Inscription">Inscription</a></li>
                         <li onClick={() => deconnexion()}><a href="/">Déconnexion</a></li> 
                     </ul>
                 </div>

@@ -8,6 +8,8 @@ import Accueil from './Accueil.js'
 import Connexion from './Connexion.js'
 import Inscription from './Inscription.js'
 import AccueilAdmin from './administration/AccueilAdmin.js'
+import AjoutSortie from './administration/AjoutSortie.js'
+import GestionSortie from './administration/GestionSortie.js'
 
 function App() {
   const [connecte, setConnecte] = useState(false);
@@ -38,6 +40,8 @@ function App() {
         <Route exact path="/Inscription" element={<Inscription />} />
         <Route element={<AdminRouterGuard />}>
           <Route path="/admin/*" element={<AccueilAdmin />} />
+          <Route path="/admin/sortie/AjoutSortie" element={<AjoutSortie />} />
+          <Route path="/admin/sortie/GestionSortie" element={<GestionSortie />} />
         </Route>
       </Routes>
     </div>
