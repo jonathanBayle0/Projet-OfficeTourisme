@@ -43,7 +43,7 @@ app.post("/ajout_sortie", function (req, res) {
         res.status(401).send({ res: false, mess: "Erreur : il faut être admnistrateur pour effectuer cette action" })
         return;
     }
-
+    console.log(req.body);
     let s = new sortie.Sortie(req.body)
     console.log("Objet sortie créé : " + JSON.stringify(s))
 
@@ -63,10 +63,13 @@ app.post("/ajout_sortie", function (req, res) {
         .then((response) => {
             if (!response.ok) {
                 console.log("Erreur : " + JSON.stringify(response));
+                v.res = false
+                mess = "Erreur"
             } else {
                 console.log("Réussi : " + JSON.stringify(response));
+                mess = "Succès, la sortie a été ajouté"
             }
-            mess = "Succès, la sortie a été ajouté"
+            res.send({ res: v.res, mess: mess })
         })
         .catch((err) => {
             console.log("Erreur ! " + JSON.stringify(err));
@@ -74,9 +77,9 @@ app.post("/ajout_sortie", function (req, res) {
     }
     else {
         mess = v.lmess
+        res.send({ res: v.res, mess: mess })
     }
     
-    res.send({ res: v.res, mess: mess })
 })
 
 app.post("/connexion", function (req, res) {
@@ -133,6 +136,7 @@ app.post("/connexion", function (req, res) {
 
 })
 
+// Recuperation de toutes les sorties
 app.get("/recuperer_sorties", function(req, res) {
     fetch('http://localhost:8080/sorties')
     .then((response) => {
@@ -141,6 +145,23 @@ app.get("/recuperer_sorties", function(req, res) {
     .then((sorties) => {
         console.log(sorties);
         res.send({ res: true, sorties })
+    })
+    .catch((err) => {
+        console.log(err);
+        res.status(400).send({ res: false })
+    })
+})
+
+// Recuperation d'une seule sortie
+app.post("/recuperer_sortie", function(req, res) {
+    const id = req.body.id
+    fetch('http://localhost:8080/sorties/' + parseInt(id))
+    .then((response) => {
+        return response.json();
+    })
+    .then((sortie) => {
+        console.log(sortie);
+        res.send({ res: true, sortie })
     })
     .catch((err) => {
         console.log(err);

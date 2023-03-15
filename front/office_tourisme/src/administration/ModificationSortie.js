@@ -1,17 +1,33 @@
-import React, { useState } from "react";
+import { useState, useEffect } from 'react';
+import { useParams } from "react-router-dom";
+import { GetSortie } from "../Sortie";
 import axios from "axios";
 import moment from "moment"
 
-function AjoutSortie() {
-    const [sortie, setSortie] = useState({
-        nom: "",
-        description: "",
-        dateDebut: "",
-        dateFin: "",
-        prix: "",
-        adresse: "",
-        capacite: ""
-    });
+function ModificationSortie() {
+    let { sortieId } = useParams();
+
+    // Champs de sortie qu'on souhaite recuperer
+    const [sortie, setSortie] = useState({});
+
+    const getData = async () => {
+        const s = await GetSortie(sortieId)
+        setSortie(prevState => ({
+            ...prevState,
+            id: s.id,
+            nom: s.nom,
+            description: s.description,
+            dateDebut: s.dateDebut,
+            dateFin: s.dateFin,
+            prix: s.prix,
+            adresse: s.adresse,
+            capacite: s.capacite
+        }));
+    }
+    // Initialisation des champs de sortie
+    useEffect(() => {
+        getData();
+    }, []);
 
     const [errorMessage, setErrorMessage] = useState("");
     const [successMessage, setSuccessMessage] = useState("");
@@ -28,10 +44,16 @@ function AjoutSortie() {
         try {
             const dateDebutFormatted = moment(sortie.dateDebut).format("YYYY-MM-DD HH:mm:ss");
             const dateFinFormatted = moment(sortie.dateFin).format("YYYY-MM-DD HH:mm:ss");
+            const prix = sortie.prix.toString()
+            const capacite = sortie.capacite.toString()
+            const id = sortie.id.toString()
             const sortieDto = {
                 ...sortie,
                 dateDebut: dateDebutFormatted,
                 dateFin: dateFinFormatted,
+                id,
+                prix,
+                capacite
             }
             console.log(sortieDto);
             const head = {
@@ -44,17 +66,7 @@ function AjoutSortie() {
             console.log(response);
             // Vérification de la réponse de l'API
             if (response.data.res === true) {
-                // Remise a zero des differents champs
-                setSortie({
-                    nom: "",
-                    description: "",
-                    dateDebut: "",
-                    dateFin: "",
-                    prix: "",
-                    adresse: "",
-                    capacite: "",
-                });
-                setSuccessMessage("La sortie a bien été ajoutée");
+                setSuccessMessage("La modification a bien été effectuée");
                 setErrorMessage("");
                 setErrors({})
             } else {
@@ -78,7 +90,7 @@ function AjoutSortie() {
 
     return (
         <div>
-            <h3>Ajouter une sortie :</h3>
+            <h3>Modifier une sortie :</h3>
             <form onSubmit={handleSubmit}>
                 <label>
                     Nom :
@@ -158,10 +170,14 @@ function AjoutSortie() {
                 {errors.capacite && <div className="error">{errors.capacite}</div>}
                 {errorMessage && <div className="error">{errorMessage}</div>}
                 {successMessage && <div className="success">{successMessage}</div>}
-                <button type="submit">Ajouter la sortie</button>
+                <button type="submit">Modifier</button>
             </form>
+            <br />
+            <h3>Gérer les options :</h3>
+            
         </div>
     );
+
 }
 
-export default AjoutSortie;
+export default ModificationSortie;

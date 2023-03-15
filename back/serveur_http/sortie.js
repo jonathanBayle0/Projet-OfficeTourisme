@@ -1,7 +1,7 @@
 const validation = require("./validation.js")
 
 class Sortie {
-
+    id =null
     nom = null
     description = null
     dateDebut = null

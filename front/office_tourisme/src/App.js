@@ -10,6 +10,7 @@ import Inscription from './Inscription.js'
 import AccueilAdmin from './administration/AccueilAdmin.js'
 import AjoutSortie from './administration/AjoutSortie.js'
 import GestionSortie from './administration/GestionSortie.js'
+import ModificationSortie from './administration/ModificationSortie.js'
 
 function App() {
   const [connecte, setConnecte] = useState(false);
@@ -42,6 +43,7 @@ function App() {
           <Route path="/admin/*" element={<AccueilAdmin />} />
           <Route path="/admin/sortie/AjoutSortie" element={<AjoutSortie />} />
           <Route path="/admin/sortie/GestionSortie" element={<GestionSortie />} />
+          <Route path="/admin/sortie/ModificationSortie/:sortieId" element={<ModificationSortie />} />
         </Route>
       </Routes>
     </div>
