@@ -1,6 +1,6 @@
 import React from 'react'
 
-class Sortie extends React.Component {
+class Accueil extends React.Component {
 
     render() {
         return (
@@ -10,4 +10,4 @@ class Sortie extends React.Component {
         )
     }
 }
-export default Sortie
+export default Accueil

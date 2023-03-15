@@ -42,7 +42,7 @@ const donnees_validation = [
     {
         field: "capacite",
         regexp: ".{1,}",
-        mess: "Il faut au moins 1 chiffre pour la capacite",
+        mess: "Il faut au moins 1 chiffre pour la capacité",
     },
     {
         field: "adresse",

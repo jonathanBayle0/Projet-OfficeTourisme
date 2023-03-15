@@ -35,12 +35,19 @@ app.post("/ajout_sortie", function (req, res) {
     const connecte = verify_token(token)
     if (! connecte.res) {
         res.status(401).send({ res: false, mess: connecte.err })
+        return;
+    }
+    
+    // Verification si l'utilisateur est bien administrateur
+    if (connecte.data.role !== "A") {
+        res.status(401).send({ res: false, mess: "Erreur : il faut être admnistrateur pour effectuer cette action" })
+        return;
     }
 
     let s = new sortie.Sortie(req.body)
     console.log("Objet sortie créé : " + JSON.stringify(s))
 
-    let mess = "Objet sortie créé : " + JSON.stringify(s)
+    let mess;
 
     let v = validation.valider_attributs(s, sortie.donnees_validation)
     console.log(s);
@@ -59,16 +66,16 @@ app.post("/ajout_sortie", function (req, res) {
             } else {
                 console.log("Réussi : " + JSON.stringify(response));
             }
-
+            mess = "Succès, la sortie a été ajouté"
         })
         .catch((err) => {
             console.log("Erreur ! " + JSON.stringify(err));
         })
     }
     else {
-        mess += "<br>Echec validation"
+        mess = v.lmess
     }
-
+    
     res.send({ res: v.res, mess: mess })
 })
 
@@ -126,14 +133,30 @@ app.post("/connexion", function (req, res) {
 
 })
 
+app.get("/recuperer_sorties", function(req, res) {
+    fetch('http://localhost:8080/sorties')
+    .then((response) => {
+        return response.json();
+    })
+    .then((sorties) => {
+        console.log(sorties);
+        res.send({ res: true, sorties })
+    })
+    .catch((err) => {
+        console.log(err);
+        res.status(400).send({ res: false })
+    })
+})
+
 
 function verify_token(token) {
     try {
         let decoded = jwt.verify(token, private_key)
 
         // Verification de l'expiration du jeton
-        let exp = (decoded.exp * 1000) - Date.now()
-        if (exp < Date.now()) {
+        const exp = decoded.exp * 1000
+        const now = new Date().getTime();
+        if (exp < now) {
             return { res: false, err: "Erreur : Jeton expiré" }
         }
 
