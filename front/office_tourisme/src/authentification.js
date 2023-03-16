@@ -1,9 +1,10 @@
 import { redirect } from 'react-router-dom'
 
-function enregistrerToken(token, expiration, role) {
+function enregistrerToken(token, expiration, role, id) {
     localStorage.setItem("token", token)
     localStorage.setItem("expiration", expiration)
     localStorage.setItem("role", role)
+    localStorage.setItem("id", id)
 }
 
 function deconnexion() {

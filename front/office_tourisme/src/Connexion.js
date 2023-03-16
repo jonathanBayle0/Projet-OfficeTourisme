@@ -47,7 +47,8 @@ function Connexion(props) {
                     enregistrerToken(
                         res.data.token,
                         res.data.expiration,
-                        res.data.role
+                        res.data.role,
+                        res.data.id,
                     );
                     // Mise a jour de l'etat de connexion
                     props.onConnecteChange(isLogged());

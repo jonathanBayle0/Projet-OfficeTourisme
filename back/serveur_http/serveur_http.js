@@ -115,11 +115,12 @@ app.post("/connexion", function (req, res) {
                         data: {
                             mail: compteBDD.mail,
                             role: compteBDD.statut,
+                            id: compteBDD.id
                         }
                     }, private_key, { expiresIn: expiresIn });
                     const expirationDate = new Date(Date.now() + expiresIn * 1000);
 
-                    res.send({ res: true, token: token, role: compteBDD.statut, expiration: expirationDate, mess: "Succès, connexion réussie" })
+                    res.send({ res: true, token: token, role: compteBDD.statut, id: compteBDD.id, expiration: expirationDate, mess: "Succès, connexion réussie" })
                 } else {
                     // Si le mot de passe ne correspond pas
                     res.status(400).send({ res: false, mess: "Connexion impossible, mot de passe incorrect" })
