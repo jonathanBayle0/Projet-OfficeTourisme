@@ -20,6 +20,10 @@ public class OptionController {
         return optionService.getAllOptions();
     }
 
+    @GetMapping("/sortie/{sortieId}")
+    public List<OptionDto> getAllOptionsBySortie(@PathVariable Long sortieId) {
+        return optionService.getAllOptionsBySortie(sortieId);
+    }
     @GetMapping("/{id}")
     public OptionDto getOption(@PathVariable Long id) {
         return optionService.getOptionById(id);

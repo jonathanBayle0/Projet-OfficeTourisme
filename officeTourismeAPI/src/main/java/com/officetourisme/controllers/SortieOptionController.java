@@ -20,6 +20,8 @@ public class SortieOptionController {
         return sortieOptionService.getAllSortieOptions();
     }
 
+
+
     @GetMapping("/{id}")
     public SortieOptionDto getSortieOption(@PathVariable Long id) {
         return sortieOptionService.getSortieOptionById(id);
@@ -33,5 +35,9 @@ public class SortieOptionController {
     @DeleteMapping("/{id}")
     public Boolean deleteSortieOption(@PathVariable Long id) {
         return sortieOptionService.deleteSortieOption(id);
+    }
+    @DeleteMapping("/sortie")
+    public Boolean deleteSortieOption(final @RequestBody SortieOptionDto sortieOptionDto) {
+        return sortieOptionService.deleteSortieOption(sortieOptionDto);
     }
 }

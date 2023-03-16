@@ -1,6 +1,7 @@
 package com.officetourisme.services.impl;
 
 import com.officetourisme.dtos.OptionDto;
+import com.officetourisme.dtos.SortieOptionDto;
 import com.officetourisme.entities.Option;
 import com.officetourisme.mappers.OptionMapper;
 import com.officetourisme.repositories.OptionRepository;
@@ -16,17 +17,19 @@ public class OptionServiceImpl implements OptionService {
 
     private final OptionRepository optionRepository;
     private final OptionMapper optionMapper;
+    private final SortieOptionServiceImpl sortieOptionService;
 
-    public OptionServiceImpl(OptionRepository optionRepository, OptionMapper optionMapper) {
+    public OptionServiceImpl(OptionRepository optionRepository, OptionMapper optionMapper, SortieOptionServiceImpl sortieOptionService) {
         this.optionRepository = optionRepository;
         this.optionMapper = optionMapper;
+        this.sortieOptionService = sortieOptionService;
     }
 
     @Override
     public OptionDto saveOption(OptionDto optionDto) {
         Option option = optionMapper.optionDtoToEntity(optionDto);
-        optionRepository.save(option);
-        return optionDto;
+        Option opt = optionRepository.save(option);
+        return optionMapper.optionEntityToDto(opt);
     }
 
     @Override
@@ -51,5 +54,25 @@ public class OptionServiceImpl implements OptionService {
             optionsDto.add(optionMapper.optionEntityToDto(option));
         });
         return optionsDto;
+    }
+
+    /**
+     * Recuperation de toutes les options liee a une sortie
+     * @param sortieId
+     * @return
+     */
+    public List<OptionDto> getAllOptionsBySortie(Long sortieId) {
+        List<SortieOptionDto> sortieOptionDtos = sortieOptionService.getAllSortieOptions();
+        List<OptionDto> optionDtos = new ArrayList<>();
+        // Recuperation des liaisons entre les sorties et les option
+        for (SortieOptionDto sortieOptionDto : sortieOptionDtos) {
+            // Recuperation des options associe a la sortie
+            if (sortieOptionDto.getSortieId() == sortieId) {
+                // Ajout de l'option a la liste
+                OptionDto optionDto = this.getOptionById(sortieOptionDto.getOptionId());
+                optionDtos.add(optionDto);
+            }
+        }
+        return optionDtos;
     }
 }

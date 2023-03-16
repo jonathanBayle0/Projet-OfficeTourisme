@@ -152,10 +152,11 @@ app.get("/recuperer_sorties", function(req, res) {
     })
 })
 
+
 // Recuperation d'une seule sortie
 app.post("/recuperer_sortie", function(req, res) {
     const id = req.body.id
-    fetch('http://localhost:8080/sorties/' + parseInt(id))
+    fetch('http://localhost:8080/sorties/' + id)
     .then((response) => {
         return response.json();
     })
@@ -166,6 +167,143 @@ app.post("/recuperer_sortie", function(req, res) {
     .catch((err) => {
         console.log(err);
         res.status(400).send({ res: false })
+    })
+})
+
+// Recuperation d'une seule sortie
+app.post("/recuperer_options", function(req, res) {
+    console.log("GET recuperer option");
+    const id = req.body.id
+    fetch('http://localhost:8080/options/sortie/' + id)
+    .then((response) => {
+        return response.json();
+    })
+    .then((options) => {
+        console.log(options);
+        res.send({ res: true, options })
+    })
+    .catch((err) => {
+        console.log(err);
+        res.status(400).send({ res: false })
+    })
+})
+
+// Suppression d'une option
+app.post("/supprimer_option", function(req, res) {
+    console.log("DELETE option");
+    // Verification des droits 
+    const authHeader = req.headers.authorization
+    if (!authHeader) {
+        res.status(401).send({ res: false, mess: "Erreur : il faut être authentifié pour effectuer cette action" })
+        return;
+    }
+    let token = authHeader.split(' ')[1]
+    const connecte = verify_token(token)
+    if (! connecte.res) {
+        res.status(401).send({ res: false, mess: connecte.err })
+        return;
+    }
+    
+    // Verification si l'utilisateur est bien administrateur
+    if (connecte.data.role !== "A") {
+        res.status(401).send({ res: false, mess: "Erreur : il faut être admnistrateur pour effectuer cette action" })
+        return;
+    }
+
+    const sortieId = req.body.sortieId
+    const optionId = req.body.optionId
+    const sortieOption = {
+        "sortieId": sortieId,
+        "optionId": optionId
+    }
+    fetch('http://localhost:8080/sortieOptions/sortie/', {
+        headers: {
+            "Content-Type": "application/json",
+        },
+        method: "delete",
+        body: JSON.stringify(sortieOption)
+    })
+    .then((response) => {
+        return response.json();
+    })
+    .then((response) => {
+        console.log(response);
+        if (response) {
+            res.send({ res: true })
+        } else {
+            res.send({ res: false })
+        }
+    })
+    .catch((err) => {
+        console.log(err);
+        res.status(400).send({ res: false })
+    })
+})
+
+app.post("/ajouter_option", function(req, res) {
+    console.log("AJOUT option");
+    // Verification des droits 
+    const authHeader = req.headers.authorization
+    if (!authHeader) {
+        res.status(401).send({ res: false, mess: "Erreur : il faut être authentifié pour effectuer cette action" })
+        return;
+    }
+    let token = authHeader.split(' ')[1]
+    const connecte = verify_token(token)
+    if (! connecte.res) {
+        res.status(401).send({ res: false, mess: connecte.err })
+        return;
+    }
+    
+    // Verification si l'utilisateur est bien administrateur
+    if (connecte.data.role !== "A") {
+        res.status(401).send({ res: false, mess: "Erreur : il faut être admnistrateur pour effectuer cette action" })
+        return;
+    }
+
+    const sortieId = req.body.sortieId
+    const sujet = req.body.sujet
+
+    // Ajout de l'option
+    fetch('http://localhost:8080/options', {
+        headers: {
+            "Content-Type": "application/json",
+        },
+        method: "post",
+        body: JSON.stringify({ sujet })
+    })
+    .then((response) => {
+        return response.json();
+    })
+    .then((option) => {
+        console.log(option);
+        // Liaison entre l'option et la sortie
+        fetch('http://localhost:8080/sortieOptions', {
+            headers: {
+                "Content-Type": "application/json",
+            },
+            method: "post",
+            body: JSON.stringify({
+                sortieId,
+                optionId: option.id,
+            })
+        })
+        .then((response) => {
+            return response.json();
+        })
+        .then((response) => {
+            console.log(response);
+            // Ontransmet l'option qui sera ajoutée dans la liste
+            res.send({ res: true, option })
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(400).send({ res: false, err })
+        })
+    })
+    .catch((err) => {
+        console.log(err);
+        res.status(400).send({ res: false, err })
     })
 })
 

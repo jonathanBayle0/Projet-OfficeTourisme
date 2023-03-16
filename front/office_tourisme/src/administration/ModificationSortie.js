@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 import { GetSortie } from "../Sortie";
+import GestionOption from './GestionOption';
 import axios from "axios";
 import moment from "moment"
 
@@ -10,22 +11,22 @@ function ModificationSortie() {
     // Champs de sortie qu'on souhaite recuperer
     const [sortie, setSortie] = useState({});
 
-    const getData = async () => {
-        const s = await GetSortie(sortieId)
-        setSortie(prevState => ({
-            ...prevState,
-            id: s.id,
-            nom: s.nom,
-            description: s.description,
-            dateDebut: s.dateDebut,
-            dateFin: s.dateFin,
-            prix: s.prix,
-            adresse: s.adresse,
-            capacite: s.capacite
-        }));
-    }
     // Initialisation des champs de sortie
     useEffect(() => {
+        const getData = async () => {
+            const s = await GetSortie(sortieId)
+            setSortie(prevState => ({
+                ...prevState,
+                id: s.id,
+                nom: s.nom,
+                description: s.description,
+                dateDebut: s.dateDebut,
+                dateFin: s.dateFin,
+                prix: s.prix,
+                adresse: s.adresse,
+                capacite: s.capacite
+            }));
+        }
         getData();
     }, []);
 
@@ -174,7 +175,7 @@ function ModificationSortie() {
             </form>
             <br />
             <h3>Gérer les options :</h3>
-            
+            <GestionOption sortieId={sortieId}/>
         </div>
     );
 
