@@ -19,7 +19,7 @@ function AffichageSorties() {
                 // Creation de l'url de modification
                 let id = sortie.id;
                 let edition = (
-                    <a href={`/user/sortie/choixSortie/${id}`}>
+                    <a href={`/sortie/detailSortie/${id}`}>
                         <i className="fa fa-search"></i>
                     </a>
                 );

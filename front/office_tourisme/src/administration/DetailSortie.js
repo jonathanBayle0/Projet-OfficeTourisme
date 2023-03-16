@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 import { GetSortie } from "../Sortie";
-import GestionOption from '../administration/GestionOption';
+import { isLogged } from '../authentification';
 import axios from "axios";
 import moment from "moment"
 
@@ -110,10 +110,12 @@ function ChoixSortie() {
             </div>
             {errorMessage && <div className="error">{errorMessage}</div>}
             {successMessage && <div className="success">{successMessage}</div>}
-            <button type="button" onClick={handleSubmit}>Ajouter au panier</button>
+            { isLogged() && <button type="button" onClick={handleSubmit}>Ajouter au panier</button>}
             <br />
             {/* <h3>Gérer les options :</h3>
             <GestionOption sortieId={sortieId} /> */}
+            <h2>Commentaires :</h2>
+
         </div>
     );
 

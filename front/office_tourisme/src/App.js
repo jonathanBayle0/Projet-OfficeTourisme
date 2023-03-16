@@ -12,8 +12,8 @@ import AccueilAdmin from './administration/AccueilAdmin.js'
 import AjoutSortie from './administration/AjoutSortie.js'
 import GestionSortie from './administration/GestionSortie.js'
 import ModificationSortie from './administration/ModificationSortie.js'
-import AffichageSorties from './utilisateur/AffichageSorties.js'
-import ChoixSortie from './utilisateur/ChoixSortie.js'
+import AffichageSorties from './administration/AffichageSorties.js'
+import ChoixSortie from './administration/DetailSortie.js'
 import AffichagePanier from './utilisateur/AffichagePanier.js'
 import AffichageHistorique from './utilisateur/AffichageHistorique.js'
 
@@ -42,6 +42,8 @@ function App() {
       <Menu connecte={connecte} admin={role} />
       <Routes>
         <Route exact path="/" element={<Accueil />} />
+          <Route path="/sortie" element={<AffichageSorties />} />
+          <Route path="/sortie/detailSortie/:sortieId" element={<ChoixSortie />} />
         <Route exact path="/Connexion" element={<Connexion onConnecteChange={handleConnecteChange} onRoleChange={handleRoleChange} />} />
         <Route exact path="/Inscription" element={<Inscription />} />
         {/* Routes administrateurs */}
@@ -54,10 +56,8 @@ function App() {
         {/* Routes utilisateur connecte */}
         <Route element={<UserRouterGuard />}>
           <Route path="/user/*" element={<Accueil />} />
-          <Route path="/user/sortie" element={<AffichageSorties />} />
           <Route path="/user/panier" element={<AffichagePanier />} />
           <Route path="/user/historique" element={<AffichageHistorique />} />
-          <Route path="/user/sortie/choixSortie/:sortieId" element={<ChoixSortie />} />
         </Route>
       </Routes>
     </div>
