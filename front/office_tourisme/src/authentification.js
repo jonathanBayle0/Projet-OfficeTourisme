@@ -43,7 +43,7 @@ function isAdmin() {
 }
 
 function getId() {
-
+    return localStorage.getItem("id");
 }
 
 export {
@@ -51,4 +51,5 @@ export {
     deconnexion,
     isLogged,
     isAdmin,
+    getId,
 }

@@ -1,6 +1,7 @@
 package com.officetourisme.services.impl;
 
 import com.officetourisme.dtos.HistoriqueDto;
+import com.officetourisme.dtos.SortieDto;
 import com.officetourisme.entities.Historique;
 import com.officetourisme.mappers.HistoriqueMapper;
 import com.officetourisme.repositories.HistoriqueRepository;
@@ -15,10 +16,11 @@ import java.util.List;
 public class HistoriqueServiceImpl implements HistoriqueService {
     private final HistoriqueRepository historiqueRepository;
     private final HistoriqueMapper historiqueMapper;
-
-    public HistoriqueServiceImpl(HistoriqueRepository historiqueRepository, HistoriqueMapper historiqueMapper) {
+    private final SortieServiceImpl sortieService;
+    public HistoriqueServiceImpl(HistoriqueRepository historiqueRepository, HistoriqueMapper historiqueMapper, SortieServiceImpl sortieService) {
         this.historiqueRepository = historiqueRepository;
         this.historiqueMapper = historiqueMapper;
+        this.sortieService = sortieService;
     }
 
     @Override
@@ -50,5 +52,22 @@ public class HistoriqueServiceImpl implements HistoriqueService {
             historiquesDto.add(historiqueMapper.historiqueEntityToDto(historique));
         });
         return historiquesDto;
+    }
+
+    /**
+     * Retourne l'ensemble des sorties de l'historique d'un compte
+     * @param compteId
+     * @return
+     */
+    public List<SortieDto> getSortieFromCompte(Long compteId) {
+        List<HistoriqueDto> historiqueDtos = this.getAllHistoriques();
+        List<SortieDto> sorties = new ArrayList<>();
+
+        for (HistoriqueDto historique : historiqueDtos) {
+            // Recuperation des sorties de l'historique d'un compte
+            if (historique.getCompteId() == compteId)
+                sorties.add(sortieService.getSortieById(historique.getSortieId()));
+        }
+        return sorties;
     }
 }

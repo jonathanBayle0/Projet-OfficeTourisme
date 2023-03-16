@@ -1,6 +1,7 @@
 package com.officetourisme.controllers;
 
 import com.officetourisme.dtos.HistoriqueDto;
+import com.officetourisme.dtos.SortieDto;
 import com.officetourisme.services.impl.HistoriqueServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +24,16 @@ public class HistoriqueController {
     @GetMapping("/{id}")
     public HistoriqueDto getHistorique(@PathVariable Long id) {
         return historiqueService.getHistoriqueById(id);
+    }
+
+    /**
+     * Retourne l'ensemble des sorties de l'historique d'un compte
+     * @param compteId
+     * @return
+     */
+    @GetMapping("/sorties/{compteId}")
+    public List<SortieDto> getSortieFromCompte(@PathVariable Long compteId) {
+        return historiqueService.getSortieFromCompte(compteId);
     }
 
     @PostMapping
