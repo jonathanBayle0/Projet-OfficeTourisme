@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { AfficherSortie } from "../Sortie";
 
-function GestionSortie() {
+function AffichageSorties() {
     const [sorties, setSorties] = useState([]);
 
     const triSortieParDate = (sorties) => {
@@ -17,8 +17,12 @@ function GestionSortie() {
         }).then((response) => {
             const sorties = response.data.sorties.map((sortie) => {
                 // Creation de l'url de modification
-                let id = sortie.id
-                let edition = (<a href={`/admin/sortie/ModificationSortie/${id}`}><i className="fa fa-edit"></i></a>);
+                let id = sortie.id;
+                let edition = (
+                    <a href={`/user/sortie/choixSortie/${id}`}>
+                        <i className="fa fa-search"></i>
+                    </a>
+                );
                 return { nom: sortie.nom, description: sortie.description, dateDebut: sortie.dateDebut, dateFin: sortie.dateFin, prix: sortie.prix, adresse: sortie.adresse, capacite: sortie.capacite, edition };
             });
             setSorties(triSortieParDate(sorties));
@@ -33,11 +37,12 @@ function GestionSortie() {
         "Prix",
         "Adresse",
         "Capacité",
-        "Edition"
+        "Détail"
     ];
 
     return (
         <div>
+            <h2>Liste des sorties</h2>
             <table>
                 <thead>
                     <tr>
@@ -48,9 +53,7 @@ function GestionSortie() {
                 </thead>
                 <tbody>
                     {sorties.map((sortie) => (
-                        <>
-                            <AfficherSortie sortie={sortie} />
-                        </>
+                        <AfficherSortie key={sortie.id} sortie={sortie} />
                     ))}
                 </tbody>
             </table>
@@ -58,4 +61,4 @@ function GestionSortie() {
     );
 }
 
-export default GestionSortie;
+export default AffichageSorties;
