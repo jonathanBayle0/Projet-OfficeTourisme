@@ -11,6 +11,7 @@ function deconnexion() {
     localStorage.removeItem("token")
     localStorage.removeItem("expiration")
     localStorage.removeItem("role")
+    localStorage.removeItem("id")
 
     // Mise a jour de l'etat de connexion
     this.props.updateLogin(false);
@@ -39,6 +40,10 @@ function isAdmin() {
     const role = localStorage.getItem("role")
     if (role === "A") return true
     return false
+}
+
+function getId() {
+
 }
 
 export {
