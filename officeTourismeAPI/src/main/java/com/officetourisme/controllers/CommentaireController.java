@@ -23,6 +23,10 @@ public class CommentaireController {
     public List<CommentaireDto> getAllCommentaires() {
         return commentaireService.getAllCommentaires();
     }
+    @GetMapping("/sortie/{id}")
+    public List<CommentaireDto> getAllCommentairesBySortie(@PathVariable Long id) {
+        return commentaireService.getAllCommentairesBySortie(id);
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getCommentaire(@PathVariable String id) {

@@ -35,7 +35,7 @@ public class CommentaireServiceImpl implements CommentaireService {
     public CommentaireDto saveCommentaire(CommentaireDto commentaireDto) {
         Long compteId = Long.parseLong(commentaireDto.getCompteId());
         Long sortieId = Long.parseLong(commentaireDto.getSortieId());
-        if (! isParticipant(compteId, sortieId)) throw new IllegalArgumentException("L'utilisateur n'a pas effectué l'activité");
+        // if (! isParticipant(compteId, sortieId)) throw new IllegalArgumentException("L'utilisateur n'a pas effectué l'activité");
         Commentaire commentaire = commentaireMapper.commentaireDtoToEntity(commentaireDto);
         commentaireRepository.save(commentaire);
         return commentaireDto;
@@ -61,6 +61,20 @@ public class CommentaireServiceImpl implements CommentaireService {
         // Transformation de l'ensemble de la liste des commentaires en dto
         commentaires.forEach(commentaire -> commentairesDto.add(commentaireMapper.commentaireEntityToDto(commentaire)));
         return commentairesDto;
+    }
+
+    public List<CommentaireDto> getAllCommentairesBySortie(Long sortieId) {
+        List<CommentaireDto> commentairesDto = this.getAllCommentaires();
+        List<CommentaireDto> commentairesSortie = new ArrayList<>();
+
+        for (CommentaireDto comm : commentairesDto) {
+            Long sortie = Long.parseLong(comm.getSortieId());
+            if (sortie == sortieId) {
+                commentairesSortie.add(comm);
+            }
+        }
+
+        return commentairesSortie;
     }
 
     /**

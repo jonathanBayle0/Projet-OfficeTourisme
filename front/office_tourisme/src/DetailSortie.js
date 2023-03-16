@@ -1,19 +1,23 @@
 import { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
-import { GetSortie } from "../Sortie";
-import { isLogged } from '../authentification';
+import { GetSortie } from "./Sortie";
+import { isLogged } from './authentification';
+import AffichageOption from './AffichageOption';
 import axios from "axios";
 import moment from "moment"
 
-function ChoixSortie() {
+function DetailSortie() {
     let { sortieId } = useParams();
+    const compteId = localStorage.getItem("id")
 
-    // Champs de sortie qu'on souhaite recuperer
     const [sortie, setSortie] = useState({});
+    const [commentaires, setCommentaires] = useState([]);
+    const [comment, setComment] = useState('');
 
-    // Initialisation des champs de sortie
+    // Initialisation des champs de la sortie
     useEffect(() => {
         const getData = async () => {
+            // Recuperation de la sortie
             const s = await GetSortie(sortieId)
             setSortie(prevState => ({
                 ...prevState,
@@ -26,6 +30,16 @@ function ChoixSortie() {
                 adresse: s.adresse,
                 capacite: s.capacite
             }));
+
+            const c = await axios({
+                method: "post",
+                url: "/recuperer_commentaires",
+                headers: { "Content-Type": "application/json" },
+                data: {
+                    sortieId
+                }
+            })
+            setCommentaires(c.data.commentaires)
         }
         getData();
     }, []);
@@ -33,6 +47,7 @@ function ChoixSortie() {
     const [errorMessage, setErrorMessage] = useState("");
     const [successMessage, setSuccessMessage] = useState("");
 
+    // Enregistrement dans le panier
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
@@ -52,7 +67,7 @@ function ChoixSortie() {
             // Construction du panier
             const data = {
                 sortieId: sortieDto.id,
-                compteId: localStorage.getItem("id")
+                compteId
             }
             const head = {
                 headers: {
@@ -76,6 +91,41 @@ function ChoixSortie() {
             setSuccessMessage("");
         }
     };
+
+    // Ajout d'un commentaire
+    async function handleSubmitCommentaire(event) {
+        event.preventDefault();
+        if (comment.length === 0) return;
+        // Construction du message
+        const date = moment().format("YYYY-MM-DD HH:mm:ss") 
+        const com = {
+            type: "texte",
+            date,
+            contenu: comment,
+            compteId,
+            sortieId
+        }
+        const head = {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + localStorage.getItem("token")
+            },
+        };
+        const response = await axios.post("/ajout_commentaire", com, head);
+        if (response.data.res) {
+            setCommentaires([...commentaires, com])
+        }
+        setComment('')
+      };
+    
+      const handleChangeCommentaire = (event) => {
+        setComment(event.target.value);
+      };
+
+    const columns = [
+        "Date",
+        "Message"
+    ];
 
     return (
         <div>
@@ -108,17 +158,49 @@ function ChoixSortie() {
                 <label>Capacite :</label>
                 <span>{sortie.capacite}</span>
             </div>
-            {errorMessage && <div className="error">{errorMessage}</div>}
-            {successMessage && <div className="success">{successMessage}</div>}
-            { isLogged() && <button type="button" onClick={handleSubmit}>Ajouter au panier</button>}
+            {errorMessage && <div className="error-msg">{errorMessage}</div>}
+            {successMessage && <div className="success-msg">{successMessage}</div>}
+            {isLogged() && <button type="button" onClick={handleSubmit}>Ajouter au panier</button>}
             <br />
-            {/* <h3>Gérer les options :</h3>
-            <GestionOption sortieId={sortieId} /> */}
+            <h3>Liste des options :</h3>
+            <AffichageOption sortieId={sortieId} />
             <h2>Commentaires :</h2>
+            {isLogged() &&
+                <>
+                    <h4>Ajoutez un commentaire : </h4>
+                    <form onSubmit={handleSubmitCommentaire}>
+                        <label>
+                            Commentaire :
+                            <textarea value={comment} onChange={handleChangeCommentaire} />
+                        </label>
+                        <button type="submit">Valider</button>
+                    </form>
+                </>
+
+            }
+            <table>
+                <thead>
+                    <tr>
+                        {columns.map((column) => (
+                            <th key={column}>{column}</th>
+                        ))}
+                    </tr>
+                </thead>
+                <tbody>
+                    {commentaires.map((commentaire) => (
+                        <>
+                        <tr>
+                            <td key={commentaire.id}>{commentaire.date}</td>
+                            <td key={commentaire.id}>{commentaire.contenu}</td>
+                        </tr>
+                        </>
+                    ))}
+                </tbody>
+            </table>
 
         </div>
     );
 
 }
 
-export default ChoixSortie;
+export default DetailSortie;

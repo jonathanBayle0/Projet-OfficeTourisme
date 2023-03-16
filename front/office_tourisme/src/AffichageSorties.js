@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { AfficherSortie } from "../Sortie";
+import { AfficherSortie } from "./Sortie";
 
 function AffichageSorties() {
     const [sorties, setSorties] = useState([]);

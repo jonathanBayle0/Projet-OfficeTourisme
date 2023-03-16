@@ -12,8 +12,8 @@ import AccueilAdmin from './administration/AccueilAdmin.js'
 import AjoutSortie from './administration/AjoutSortie.js'
 import GestionSortie from './administration/GestionSortie.js'
 import ModificationSortie from './administration/ModificationSortie.js'
-import AffichageSorties from './administration/AffichageSorties.js'
-import ChoixSortie from './administration/DetailSortie.js'
+import AffichageSorties from './AffichageSorties.js'
+import DetailSortie from './DetailSortie.js'
 import AffichagePanier from './utilisateur/AffichagePanier.js'
 import AffichageHistorique from './utilisateur/AffichageHistorique.js'
 
@@ -43,7 +43,7 @@ function App() {
       <Routes>
         <Route exact path="/" element={<Accueil />} />
           <Route path="/sortie" element={<AffichageSorties />} />
-          <Route path="/sortie/detailSortie/:sortieId" element={<ChoixSortie />} />
+          <Route path="/sortie/detailSortie/:sortieId" element={<DetailSortie />} />
         <Route exact path="/Connexion" element={<Connexion onConnecteChange={handleConnecteChange} onRoleChange={handleRoleChange} />} />
         <Route exact path="/Inscription" element={<Inscription />} />
         {/* Routes administrateurs */}

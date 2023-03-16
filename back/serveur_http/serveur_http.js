@@ -477,6 +477,55 @@ app.post("/recuperer_historique", function (req, res) {
         })
 })
 
+// Recuperation des commentaires d'une sortie
+app.post("/recuperer_commentaires", function (req, res) {
+    const sortieId = req.body.sortieId
+    fetch('http://localhost:8080/commentaires/sortie/' + sortieId)
+        .then((response) => {
+            return response.json();
+        })
+        .then((commentaires) => {
+            console.log(commentaires);
+            res.send({ res: true, commentaires })
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(400).send({ res: false })
+        })
+})
+
+// Ajout d'un commentaire a une sortie
+app.post("/ajout_commentaire", function (req, res) {
+    console.log("POST Ajout d'un commentaire à une sortie")
+    // Verification des droits 
+    const authHeader = req.headers.authorization
+    if (!authHeader) {
+        res.status(401).send({ res: false, mess: "Erreur : il faut être authentifié pour effectuer cette action" })
+        return;
+    }
+    let token = authHeader.split(' ')[1]
+    const connecte = verify_token(token)
+    if (!connecte.res) {
+        res.status(401).send({ res: false, mess: connecte.err })
+        return;
+    }
+
+    fetch('http://localhost:8080/commentaires', {
+        headers: {
+            "Content-Type": "application/json",
+        },
+        method: "post",
+        body: JSON.stringify(req.body)
+    })
+        .then((response) => {
+            res.send({ res: true, response })
+        })
+        .catch((err) => {
+            res.send({ res: false, err })
+        })
+
+})
+
 
 function verify_token(token) {
     try {
