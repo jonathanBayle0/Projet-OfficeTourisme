@@ -460,6 +460,24 @@ app.post("/valider_panier", function(req, res) {
 
 })
 
+// Recuperation des sorties d'un historique
+app.post("/recuperer_historique", function (req, res) {
+    const compteId = req.body.compteId
+    fetch('http://localhost:8080/historiques/sorties/' + compteId)
+        .then((response) => {
+            return response.json();
+        })
+        .then((historique) => {
+            console.log(historique);
+            res.send({ res: true, historique })
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(400).send({ res: false })
+        })
+})
+
+
 function verify_token(token) {
     try {
         let decoded = jwt.verify(token, private_key)

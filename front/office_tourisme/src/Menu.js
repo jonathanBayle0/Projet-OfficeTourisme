@@ -26,6 +26,7 @@ function Menu(props) {
                         <li><a href="/">Accueil</a></li>
                         <li><a href="/user/sortie">Sorties</a></li>
                         <li><a href="/user/panier">Panier</a></li>
+                        <li><a href="/user/historique">Historique</a></li>
                         <li onClick={() => deconnexion()}><a href="/">Déconnexion</a></li> 
                     </ul>
                 </div>

@@ -15,6 +15,7 @@ import ModificationSortie from './administration/ModificationSortie.js'
 import AffichageSorties from './utilisateur/AffichageSorties.js'
 import ChoixSortie from './utilisateur/ChoixSortie.js'
 import AffichagePanier from './utilisateur/AffichagePanier.js'
+import AffichageHistorique from './utilisateur/AffichageHistorique.js'
 
 function App() {
   const [connecte, setConnecte] = useState(false);
@@ -55,6 +56,7 @@ function App() {
           <Route path="/user/*" element={<Accueil />} />
           <Route path="/user/sortie" element={<AffichageSorties />} />
           <Route path="/user/panier" element={<AffichagePanier />} />
+          <Route path="/user/historique" element={<AffichageHistorique />} />
           <Route path="/user/sortie/choixSortie/:sortieId" element={<ChoixSortie />} />
         </Route>
       </Routes>
