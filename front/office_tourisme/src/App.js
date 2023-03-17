@@ -16,6 +16,7 @@ import AffichageSorties from './AffichageSorties.js'
 import DetailSortie from './DetailSortie.js'
 import AffichagePanier from './utilisateur/AffichagePanier.js'
 import AffichageHistorique from './utilisateur/AffichageHistorique.js'
+import Statistique from './administration/Statistique.js'
 
 function App() {
   const [connecte, setConnecte] = useState(false);
@@ -49,6 +50,7 @@ function App() {
         {/* Routes administrateurs */}
         <Route element={<AdminRouterGuard />}>
           <Route path="/admin/*" element={<AccueilAdmin />} />
+          <Route path="/admin/Statistique" element={<Statistique />} />
           <Route path="/admin/sortie/AjoutSortie" element={<AjoutSortie />} />
           <Route path="/admin/sortie/GestionSortie" element={<GestionSortie />} />
           <Route path="/admin/sortie/ModificationSortie/:sortieId" element={<ModificationSortie />} />

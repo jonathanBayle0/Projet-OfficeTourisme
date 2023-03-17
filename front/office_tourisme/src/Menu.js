@@ -13,6 +13,7 @@ function Menu(props) {
                         <li><a href="/admin/Accueil">Accueil</a></li>
                         <li><a href="/admin/sortie/AjoutSortie">Ajouter sortie</a></li>
                         <li><a href="/admin/sortie/GestionSortie">Gestion des sorties</a></li>
+                        <li><a href="/admin/Statistique">Statistique</a></li>
                         <li onClick={() => deconnexion()}><a href="/">Déconnexion</a></li>
                     </ul>
                 </div>

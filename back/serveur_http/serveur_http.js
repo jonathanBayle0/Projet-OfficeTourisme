@@ -150,7 +150,7 @@ app.post("/inscription", function (req, res) {
     // Verification des bons parametres d'entree
     if (v.res) {
         let compteBDD = req.body
-        compteBDD = {...compteBDD, statut: "U"}
+        compteBDD = { ...compteBDD, statut: "U" }
         // On enregistre les informations dans la base de donnes 
         fetch('http://localhost:8080/comptes/', {
             headers: {
@@ -413,7 +413,7 @@ app.post("/recuperer_panier", function (req, res) {
         })
 })
 
-app.post("/supprimer_panier", function(req, res) {
+app.post("/supprimer_panier", function (req, res) {
     console.log("DELETE sortie panier");
     // Verification des droits 
     const authHeader = req.headers.authorization
@@ -459,7 +459,7 @@ app.post("/supprimer_panier", function(req, res) {
 
 })
 
-app.post("/valider_panier", function(req, res) {
+app.post("/valider_panier", function (req, res) {
     console.log("Validation panier");
     // Verification des droits 
     const authHeader = req.headers.authorization
@@ -569,6 +569,20 @@ app.post("/ajout_commentaire", function (req, res) {
             res.send({ res: false, err })
         })
 
+})
+
+// Recupere tous les comptes de la base
+app.get("/recuperer_comptes", function (req, res) {
+    fetch('http://localhost:8080/comptes')
+        .then((response) => {
+            return response.json();
+        })
+        .then((comptes) => {
+            res.send({ res: true, comptes })
+        })
+        .catch((err) => {
+            res.send({ res: false, err })
+        })
 })
 
 
