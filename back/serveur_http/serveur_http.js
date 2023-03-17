@@ -4,6 +4,7 @@ const util = require("util")
 const validation = require('./validation.js')
 const jwt = require('jsonwebtoken')
 const compte = require('./compte.js')
+const inscription = require('./inscription.js')
 const sortie = require('./sortie.js')
 
 const { private_key } = require('./config')
@@ -131,6 +132,50 @@ app.post("/connexion", function (req, res) {
             });
     } else {
         let mess = ["Erreur : Identifiant de connexion erroné"]
+        mess.push(v.lmess)
+        res.status(404).send({ res: false, mess: mess })
+    }
+
+})
+
+app.post("/inscription", function (req, res) {
+    console.log("POST inscription")
+    console.log("req = " + util.inspect(req))
+
+    let cpt = new inscription.Inscription(req.body)
+    console.log("Objet compte créé : " + JSON.stringify(cpt))
+
+    let v = validation.valider_attributs(cpt, compte.donnees_validation)
+
+    // Verification des bons parametres d'entree
+    if (v.res) {
+        let compteBDD = req.body
+        compteBDD = {...compteBDD, statut: "U"}
+        // On enregistre les informations dans la base de donnes 
+        fetch('http://localhost:8080/comptes/', {
+            headers: {
+                "Content-Type": "application/json",
+            },
+            method: "post",
+            body: JSON.stringify(compteBDD)
+        })
+            .then((response) => {
+                // Traitement si l'email est deja pris
+                if (!response.ok) {
+                    res.status(400).send({ res: false, mess: "Erreur l'email existe déjà !" })
+                    return;
+                }
+                return response.json();
+            })
+            // Sinon
+            .then((json) => {
+                res.send({ res: true, mess: "Succès, inscription réussie" })
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    } else {
+        let mess = ["Erreur : Champs erronés"]
         mess.push(v.lmess)
         res.status(404).send({ res: false, mess: mess })
     }
