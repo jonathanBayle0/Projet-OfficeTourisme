@@ -1,4 +1,5 @@
 import { deconnexion } from './authentification';
+import './Main.css'
 
 function Menu(props) {
 
