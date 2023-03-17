@@ -122,11 +122,6 @@ function DetailSortie() {
         setComment(event.target.value);
       };
 
-    const columns = [
-        "Date",
-        "Message"
-    ];
-
     return (
         <div>
             <h3>Détail de la sortie :</h3>
@@ -179,13 +174,6 @@ function DetailSortie() {
 
             }
             <table>
-                <thead>
-                    <tr>
-                        {columns.map((column) => (
-                            <th key={column}>{column}</th>
-                        ))}
-                    </tr>
-                </thead>
                 <tbody>
                     {commentaires.map((commentaire) => (
                         <>

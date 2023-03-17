@@ -182,6 +182,53 @@ app.post("/inscription", function (req, res) {
 
 })
 
+// Suppression d'un compte
+app.post("/supprimer_compte", function (req, res) {
+    console.log("DELETE compte");
+    // Verification des droits 
+    const authHeader = req.headers.authorization
+    if (!authHeader) {
+        res.status(401).send({ res: false, mess: "Erreur : il faut être authentifié pour effectuer cette action" })
+        return;
+    }
+    let token = authHeader.split(' ')[1]
+    const connecte = verify_token(token)
+    if (!connecte.res) {
+        res.status(401).send({ res: false, mess: connecte.err })
+        return;
+    }
+
+    // Verification si l'utilisateur est bien administrateur
+    if (connecte.data.role !== "A") {
+        res.status(401).send({ res: false, mess: "Erreur : il faut être admnistrateur pour effectuer cette action" })
+        return;
+    }
+
+    const compteId = req.body.compteId
+    
+    fetch('http://localhost:8080/comptes/' + compteId, {
+        headers: {
+            "Content-Type": "application/json",
+        },
+        method: "delete",
+    })
+        .then((response) => {
+            return response.json();
+        })
+        .then((response) => {
+            console.log(response);
+            if (response) {
+                res.send({ res: true })
+            } else {
+                res.send({ res: false })
+            }
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(400).send({ res: false })
+        })
+})
+
 // Recuperation de toutes les sorties
 app.get("/recuperer_sorties", function (req, res) {
     fetch('http://localhost:8080/sorties')
