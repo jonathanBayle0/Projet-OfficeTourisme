@@ -95,7 +95,7 @@ function Inscription() {
     return (
         <div>
           <h2>Inscription</h2>
-          {succes && <div className="error-msg">{succes}</div>}
+          {succes && <div className="succes-msg">{succes}</div>}
           {error.mess && <div className="error-msg">{error.mess}</div>}
           <form>
             <div>

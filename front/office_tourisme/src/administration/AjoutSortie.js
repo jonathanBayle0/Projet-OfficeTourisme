@@ -78,7 +78,7 @@ function AjoutSortie() {
 
     return (
         <div>
-            <h1>Ajouter une sortie </h1>
+            <h1>Ajouter une sortie :</h1>
             <form onSubmit={handleSubmit}>
                 <label>
                     Nom :

@@ -111,7 +111,7 @@ function AffichagePanier() {
                     </tbody>
                 </table>
                 <br />
-                <button onClick={handleValidation}>Valider la sélection</button>
+                <button type="submit" onClick={handleValidation}>Valider la sélection</button>
             </div>
         );
     }
