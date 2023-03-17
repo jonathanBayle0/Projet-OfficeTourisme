@@ -1,34 +1,306 @@
+h1 {
+  text-align: center; /* Centre l'élément */
+  font-size: 2.5rem; /* Donne une taille de police de 2.5 fois la taille de base */
+  margin: 1rem 0; /* Ajoute une marge de 1rem en haut et en bas pour plus d'aération */
+  font-weight: bold; /* Donne un poids de police en gras pour plus de contraste */
+}
+
 .menu {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    background-color: #f8f8f8;
-    padding: 10px;
-  }
-  
-  .menu ul {
-    display: flex;
-    flex-direction: row;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .menu li {
-    margin: 0 10px;
-  }
-  
-  .menu a {
-    color: #333;
-    text-decoration: none;
-    font-weight: bold;
-    padding: 5px;
-    border-radius: 5px;
-  }
-  
-  .menu a:hover {
-    background-color: #333;
-    color: #fff;
-  }
-  
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f8f8f8;
+  padding: 10px;
+}
+
+.menu ul {
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.menu li {
+  margin: 0 10px;
+}
+
+.menu a {
+  color: #333;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.menu a:hover {
+  background-color: #333;
+  color: #fff;
+}
+
+
+.succes-msg {
+  color: green;
+  margin-bottom: 10px;
+}
+
+.error-msg {
+  color: red;
+  margin-bottom: 10px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1em 0;
+}
+
+th, td {
+  padding: 0.5em;
+  text-align: left;
+  vertical-align: top;
+  border: 1px solid #ddd;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+h2 {
+  margin-bottom: 1em;
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #333;
+}
+
+.Connexion {
+  margin: 20px auto;
+  padding: 20px;
+  width: 400px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.Connexion table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.Connexion td {
+  padding: 10px;
+  border: none;
+}
+
+.Connexion td.error-msg {
+  color: red;
+}
+
+.Connexion input[type="email"],
+.Connexion input[type="password"] {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.Connexion button.btn-connexion {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.Connexion button.btn-connexion:hover {
+  background-color: #0069d9;
+}
+
+.liste {
+  margin-top: 20px;
+  padding: 20px;
+  border: 2px solid #ddd;
+  border-radius: 5px;
+  background-color: #f7f7f7;
+}
+
+.liste h1 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.liste ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.liste li {
+  margin-bottom: 10px;
+  font-size: 18px;
+  color: #333;
+}
+
+.liste li span {
+  font-weight: bold;
+  color: #666;
+}
+
+/* Style pour la section de modification d'une sortie */
+form {
+  max-width: 50%;
+  margin: 0 20px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 8px;
+  margin: 5px 0px;
+  font-size: 16px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+button[type="submit"] {
+  background-color: #4CAF50;
+  margin-bottom: 10px;
+  color: #fff;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+button[type="submit"]:hover {
+  background-color: #45a049;
+}
+
+.success {
+  color: green;
+  font-weight: bold;
+}
+
+.error {
+  color: red;
+  font-weight: bold;
+}
+
+/* Style pour la section de gestion des options */
+.container {
+  display: flex;
+  justify-content:space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  margin-left: 10px;
+  max-width: 300px;
+}
+
+.container p {
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+button {
+  background-color: #f44336;
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #d32f2f;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 10px;
+}
+
+form label {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+form input[type="text"] {
+  padding: 10px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  font-size: 16px;
+  width: 100%;
+}
+
+form button[type="submit"] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+form button[type="submit"]:hover {
+  background-color: #45a049;
+}
+
+.detail {
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.detail h3 {
+  margin-top: 0;
+}
+
+.detail label {
+  font-weight: bold;
+}
+
+.detail span {
+  margin-left: 10px;
+}
+
+.detail .error-msg {
+  color: red;
+}
+
+.detail .success-msg {
+  color: green;
+}
+
+.detail button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 10px 0px;
+  cursor: pointer;
+}
+
+.detail button:hover {
+  background-color: #0062cc;
+}
+

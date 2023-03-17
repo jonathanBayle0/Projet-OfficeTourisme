@@ -94,7 +94,7 @@ function Connexion(props) {
     }
 
     return (
-        <div>
+        <div className='Connexion'>
             <h2>Connexion</h2>
             <div className='succes-msg'>{succes}</div>
             <div className='error-msg'>{error.mess}</div>

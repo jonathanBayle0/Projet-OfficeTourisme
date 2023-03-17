@@ -123,7 +123,7 @@ function DetailSortie() {
       };
 
     return (
-        <div>
+        <div className='detail'>
             <h3>Détail de la sortie :</h3>
             <div>
                 <label>Nom :</label>

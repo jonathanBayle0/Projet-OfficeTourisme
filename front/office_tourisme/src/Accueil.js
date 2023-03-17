@@ -5,7 +5,7 @@ class Accueil extends React.Component {
     render() {
         return (
             <div>
-                <h2>Office de tourisme</h2>
+                <h1>Office de tourisme</h1>
             </div>
         )
     }

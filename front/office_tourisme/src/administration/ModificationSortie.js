@@ -102,7 +102,6 @@ function ModificationSortie() {
                         onChange={handleChange}
                     />
                 </label>
-                <br />
                 {errors.nom && <div className="error">{errors.nom}</div>}
                 <label>
                     Description :
@@ -112,7 +111,6 @@ function ModificationSortie() {
                         onChange={handleChange}
                     />
                 </label>
-                <br />
                 {errors.description && <div className="error">{errors.description}</div>}
                 <label>
                     Date de début :
@@ -123,7 +121,6 @@ function ModificationSortie() {
                         onChange={handleChange}
                     />
                 </label>
-                <br />
                 {errors.dateDebut && <div className="error">{errors.dateDebut}</div>}
                 <label>
                     Date de fin :
@@ -134,7 +131,6 @@ function ModificationSortie() {
                         onChange={handleChange}
                     />
                 </label>
-                <br />
                 {errors.dateFin && <div className="error">{errors.dateFin}</div>}
                 <label>
                     Prix :
@@ -145,7 +141,6 @@ function ModificationSortie() {
                         onChange={handleChange}
                     />
                 </label>
-                <br />
                 {errors.prix && <div className="error">{errors.prix}</div>}
                 <label>
                     Adresse :
@@ -156,7 +151,6 @@ function ModificationSortie() {
                         onChange={handleChange}
                     />
                 </label>
-                <br />
                 {errors.adresse && <div className="error">{errors.adresse}</div>}
                 <label>
                     Capacite :
@@ -167,7 +161,6 @@ function ModificationSortie() {
                         onChange={handleChange}
                     />
                 </label>
-                <br />
                 {errors.capacite && <div className="error">{errors.capacite}</div>}
                 {errorMessage && <div className="error">{errorMessage}</div>}
                 {successMessage && <div className="success">{successMessage}</div>}

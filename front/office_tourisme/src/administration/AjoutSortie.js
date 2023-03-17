@@ -78,7 +78,7 @@ function AjoutSortie() {
 
     return (
         <div>
-            <h3>Ajouter une sortie :</h3>
+            <h1>Ajouter une sortie </h1>
             <form onSubmit={handleSubmit}>
                 <label>
                     Nom :
@@ -89,7 +89,6 @@ function AjoutSortie() {
                         onChange={handleChange}
                     />
                 </label>
-                <br />
                 {errors.nom && <div className="error">{errors.nom}</div>}
                 <label>
                     Description :
@@ -99,7 +98,6 @@ function AjoutSortie() {
                         onChange={handleChange}
                     />
                 </label>
-                <br />
                 {errors.description && <div className="error">{errors.description}</div>}
                 <label>
                     Date de début :
@@ -110,7 +108,6 @@ function AjoutSortie() {
                         onChange={handleChange}
                     />
                 </label>
-                <br />
                 {errors.dateDebut && <div className="error">{errors.dateDebut}</div>}
                 <label>
                     Date de fin :
@@ -121,7 +118,6 @@ function AjoutSortie() {
                         onChange={handleChange}
                     />
                 </label>
-                <br />
                 {errors.dateFin && <div className="error">{errors.dateFin}</div>}
                 <label>
                     Prix :
@@ -132,7 +128,6 @@ function AjoutSortie() {
                         onChange={handleChange}
                     />
                 </label>
-                <br />
                 {errors.prix && <div className="error">{errors.prix}</div>}
                 <label>
                     Adresse :
@@ -143,7 +138,6 @@ function AjoutSortie() {
                         onChange={handleChange}
                     />
                 </label>
-                <br />
                 {errors.adresse && <div className="error">{errors.adresse}</div>}
                 <label>
                     Capacite :
@@ -154,7 +148,6 @@ function AjoutSortie() {
                         onChange={handleChange}
                     />
                 </label>
-                <br />
                 {errors.capacite && <div className="error">{errors.capacite}</div>}
                 {errorMessage && <div className="error">{errorMessage}</div>}
                 {successMessage && <div className="success">{successMessage}</div>}
